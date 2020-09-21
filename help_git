@@ -1,3 +1,5 @@
+COMMANDES UTILES GIT
+
 git Initialiser Git:
 	$ git --version (vérifier si Git est correctement installé)
 	$ git init (créer un nouveau dépôt Git)
