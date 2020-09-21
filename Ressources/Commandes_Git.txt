@@ -1,0 +1,51 @@
+ ______________________________
+|   _________      _________   |  _________   
+|  |         |    |         |  | |         |
+|  |         | -> |         | -> |         |
+|  |  LOCAL  |    |  INDEX  |  | | DISTANT |
+|  |         | <- |         | <- |         |
+|  |_________|    |_________|  | |_________| 
+|                              |
+|        MON ORDINATEUR        |
+|______________________________|
+
+
+-----------------------------------------------------------------------
+
+
+RÉCUPÉRER (du répertoire distant vers son répertoire local)
+
+Au choix parmis ces 3 commandes :
+
+Importer le projet sur un nouvel ordinateur
+--> git clone https://github.com/pac421/g4_first_website
+
+Extraire les fichiers distants qui ne sont pas en local
+--> git fetch origin 
+
+Fusionner les modifications distante en local 
+--> git pull
+
+
+-----------------------------------------------------------------------
+
+
+ENVOYER (de son répertoire local vers le répertoire distant)
+
+Étape 1 : Ajouter des fichiers à l’index local
+--> git add <nom-du-fichier>
+
+Étape 2 : Valider l'index local
+--> git commit –m “<description-du-commit>”
+
+Étape 3 : Envoyer sur GitHub
+--> git push origin master
+
+
+-----------------------------------------------------------------------
+
+
+AUTRES COMMANDES UTILES
+
+Afficher la liste des fichiers modifiés
+--> git status
