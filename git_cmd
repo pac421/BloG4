@@ -1,0 +1,66 @@
+git Initialiser Git:
+	$ git --version (vérifier si Git est correctement installé)
+	$ git init (créer un nouveau dépôt Git)
+
+Configurer les préférences de l’utilisateur:
+	$ git config --global user.name "<pseudo>"
+	$ git config --global user.email mail@example.com
+	$ git config --global core.editor vim (éditeur de texte par défaut)
+	$ git config --global color.ui auto (coloration syntaxique)
+	$ git config --list
+
+Ajouter des fichiers à l’index:
+    $ git add . (ajouter tous les fichiers)
+	$ git add <nom-fichier>
+
+Créer une copie du dépôt:
+	$ git clone <github-repository-url> (créer une copie d’un dépôt distant)
+	$ git clone </chemin/vers/dépôt> (créer une copie d’un dépôt local)
+
+Valider les modifications:
+	$ git commit –m “<description du commit>”
+	$ git commit --amend (valider dans le dernier commit)
+	$ git push origin <nom-de-la-branche> (envoyer les modifications locales)
+	$ git stash (commit temporaire)
+	$ git rebase master (appliquer les commits sur une autre branche)
+
+Afficher des informations utiles:
+	$ git status (afficher la liste des fichiers modifiés et la branche actuelle)
+	$ git log (afficher les logs de la branche)
+	$ git show (afficher des informations sur tout fichier Git)
+	$ git ls-tree HEAD (afficher un fichier arborescent avec la valeur SHA-1)
+	$ git cat-file –p <SHA-1> (affichez le type d’un fichier)
+	$ git fsck (identifier les fichiers corrompus)
+
+Gérer les branches:
+	$ git checkout -b <nom-branche> (créer une branche)
+	$ git checkout <nom-branche> (changer de branche)
+	$ git branch (afficher la liste des branches)
+	$ git branch –d <nom-branche> (supprimer une branche)
+	$ git checkout --track nom_du_remote/nom_de_la_branche (créer une branche local à partir d’une branche distante)
+
+Connecter le dépôt local à un serveur distant:
+	$ git remote add origin <github-repository-url>
+	$ git remote –v (afficher la liste des dépôts distants)
+
+Mettre à jour le répertoire local:
+	$ git pull (fusionner les modifications distante en local)
+	$ git fetch origin (extraire les fichiers distants qui ne sont pas en local)
+	$ git merge <nom-branche> (fusionner une branche dans la branche active)
+
+Visualiser les confli
+	$ git diff --base <nom-fichier> (afficher les conflits d’un fichier)
+	$ git diff <branche-source> <branche-cible> (afficher les futures conflits)
+	$ git diff (afficher tous les conflits)
+
+Rattraper les erreurs:
+	$ git reset --hard HEAD (réinitialiser le répertoire à l’état du dernier commit)
+	$ git rm nomfichier.txt (supprimer des fichiers du répertoire)
+
+Autres commandes utiles:
+	$ git tag 1.1.0 <insert-commit-ID-here> (marquer des commits)
+	$ git grep "<expression>” (rechercher des expressions ou des mots)
+	$ gitk (lancer l’interface graphique du dépôt local)
+	$ git gc (optimiser le dépôt en supprimant les fichiers inutiles)
+	$ git archive --format=tar master (créer un fichier zip ou tar contenant une branche)
+	$ git prune (supprimer les fichiers qui n’ont pas de pointeurs entrants)
