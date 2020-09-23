@@ -18,7 +18,7 @@ RÉCUPÉRER (du répertoire distant vers son répertoire local)
 Au choix parmis ces 3 commandes :
 
 Importer le projet sur un nouvel ordinateur
---> git clone https://github.com/pac421/g4_first_website
+--> git clone https://github.com/pac421/BloG4
 
 Extraire les fichiers distants qui ne sont pas en local
 --> git fetch origin 
