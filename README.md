@@ -24,18 +24,23 @@ You can install the needed packages by using these commands:
 ```
 
 
-### Building BloG4
-
-You can download the sources by using this commands:
-
-```sh
-git clone https://github.com/pac421/BloG4.git
-```
-
 ### Installing and Running BloG4
 
 To run the freshly built BloG4 use this:
 
 ```sh
-Écrire ici les commandes d'installation du projet
+# Download the project from Github
+git clone https://github.com/pac421/BloG4.git
+
+# Go to the app folder
+cd BloG4/BloG4
+
+# Create the database
+php bin/console doctrine:database:create
+
+# Create the tables and property
+php bin/console doctrine:migrations:migrate
+
+# Start the Symfony server
+symfony server:start
 ```
