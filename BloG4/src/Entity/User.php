@@ -49,10 +49,12 @@ class User implements UserInterface
      */
     private $bornDate;
 
+    
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getEmail(): ?string
     {
