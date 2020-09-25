@@ -71,11 +71,15 @@ class HomeController extends AbstractController
     public function profil(EntityManagerInterface $entityManager, User $user)
     {
 
-        $user = $entityManager->getRepository(User::class)->findAll();
+        if(isset($user))
+        {
+
+            $user = $entityManager->getRepository(User::class)->findAll();
         
-        return $this->render('home/profil.html.twig', [
-            'user' => $user
-        ]);
+                return $this->render('home/profil.html.twig', [
+                    'user' => $user
+                ]);
+        }
     }
 
 
