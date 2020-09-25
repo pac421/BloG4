@@ -37,5 +37,5 @@ git clone https://github.com/pac421/BloG4.git
 To run the freshly built BloG4 use this:
 
 ```sh
-Commandes d'installation du projet
+Écrire ici les commandes d'installation du projet
 ```
