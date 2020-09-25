@@ -15,6 +15,7 @@ class HomeController extends AbstractController
 {
 
     private $passwordEncoder;
+
     public function __construct(UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $entityManager)
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -27,9 +28,6 @@ class HomeController extends AbstractController
      */
     public function subscribe(EntityManagerInterface $entityManager,Request $request)
     {
-        
-
-        
         $email = $request->request->get('email');
         $password = $request->request->get('password');
         $firstName = $request->request->get('firstname');
@@ -51,19 +49,37 @@ class HomeController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             
-            return $this->render('home/fils.html.twig');
+            return $this->render('home/home.html.twig');
         }
          
-        return $this->render('security/login.html.twig');
+        return $this->render('home/subscribe.html.twig');
     }
 
 
     /**
-     * @Route("/fils", name="fils")
+     * @Route("/home", name="home")
      */
-    public function fils()
+    public function home()
     {
-        return $this->render('home/fils.html.twig');
+        return $this->render('home/home.html.twig');
+    }
+
+
+    /**
+     * @Route("/profil/{id}", name="profil")
+     */
+    public function profil(EntityManagerInterface $entityManager, User $user)
+    {
+
+        if(isset($user))
+        {
+
+            $user = $entityManager->getRepository(User::class)->findAll();
+        
+                return $this->render('home/profil.html.twig', [
+                    'user' => $user
+                ]);
+        }
     }
 
 

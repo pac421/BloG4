@@ -7,4 +7,5 @@
 /public/bundles/
 /src/.preload.php
 /var/
+/BloG4/.env
 ###< symfony/framework-bundle ###
