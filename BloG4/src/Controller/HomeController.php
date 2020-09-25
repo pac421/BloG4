@@ -29,12 +29,14 @@ class HomeController extends AbstractController
     {
         
 
+        
         $email = $request->request->get('email');
         $password = $request->request->get('password');
         $firstName = $request->request->get('firstname');
         $lastName = $request->request->get('lastname');
         $bornDate = $request->request->get('bornDate');
 
+        if (isset($email) & isset($password) & isset($firstName) & isset($lastName) & isset($bornDate) ){
             $user= new User;
             $user->setEmail($email);
             $user->setFirstname($firstName);
@@ -45,9 +47,12 @@ class HomeController extends AbstractController
             $user->setBornDate(new \DateTime($bornDate));
             $user->setRoles($user->getRoles());
 
+            $entityManager=$this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
     
+        }
+         
         return $this->render('home/subscribe.html.twig');
     }
 }
