@@ -13,3 +13,7 @@ couleur primaire : #4285F4
 
 
 C:\Users\Walczak Mathieu>cd /D D:\Documents\Institut G4\BloG4\BloG4 -> C: vers D:
+
+Cette structure oblige l’utilisateur à s’inscrire dans un premier temps puis à s’authentifier afin de pouvoir avoir accès au fil d’actualité. 
+Une fois sur le fil d’actualité l’utilisateur a quatre possibilités :
+Il peut visualiser son fil d’actualité
