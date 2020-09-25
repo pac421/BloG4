@@ -50,9 +50,21 @@ class HomeController extends AbstractController
             $entityManager=$this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-    
+            
+            return $this->render('home/fils.html.twig');
         }
          
-        return $this->render('home/subscribe.html.twig');
+        return $this->render('security/login.html.twig');
     }
+
+
+    /**
+     * @Route("/fils", name="fils")
+     */
+    public function fils()
+    {
+        return $this->render('home/fils.html.twig');
+    }
+
+
 }
