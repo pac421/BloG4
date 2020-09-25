@@ -28,9 +28,14 @@ class UserFixtures extends Fixture
 
         $user = new User();
 
+                $user->setEmail("superadmin@gamil.fr");
+                $user->setFirstname("Admin");
+                $user->setLastName("Super");
+                $user->setBornDate(new \DateTime("20/12/1996"));
+                $user->setRoles(["ROLE_ADMIN"]);
                 $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,
-                        'the_new_password'
+                        'password'
                      ));
     }
 }
