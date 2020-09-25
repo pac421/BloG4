@@ -1,8 +1,3 @@
-Requierements
-* PHP 7.3
-* Symfony 5.1
-
-
 BloG4
 =======
 
@@ -14,6 +9,10 @@ Development
 
 For compiling and developing BloG4 you need to setup the development
 environment first.
+
+Requierements
+* PHP 7.3
+* Symfony 5.1
 
 
 ### Development Environment
