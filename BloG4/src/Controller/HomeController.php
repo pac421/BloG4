@@ -3,19 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-
-
 class HomeController extends AbstractController
 {
-
-
-
    
     /**
      * @Route("/home", name="home")
@@ -26,10 +20,11 @@ class HomeController extends AbstractController
     }
 
 
+
     /**
      * @Route("/profil/{id}", name="profil")
      */
-    public function profil(EntityManagerInterface $entityManager, User $user)
+    public function profil(EntityManagerInterface $entityManager)
     {
 
         if(isset($user))
@@ -40,8 +35,8 @@ class HomeController extends AbstractController
                 return $this->render('home/profil.html.twig', [
                     'user' => $user
                 ]);
+
         }
+        
     }
-
-
 }
