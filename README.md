@@ -36,6 +36,10 @@ git clone https://github.com/pac421/BloG4.git
 
 To run the freshly built BloG4 use this:
 
-```sh
-Écrire ici les commandes d'installation du projet
-```
+Ouvrire l'invite de commande et entrer dans le dossier BloG4
+
+0. cd chemin_de_votre projet
+1. php bin/console doctrine:database:create
+2. php bin/console doctrine:migrations:migrate
+3. appuyer sur entrer une 2e fois
+4. symfony server:start
