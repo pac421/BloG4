@@ -2,4 +2,6 @@
 
 {% block body %}
 <h1>File d'actualité</h1>
+
+<a href= {{ path('profil', {'id': app.user.id}) }}>Profil</a>
 {% endblock %}
