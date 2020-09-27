@@ -8,6 +8,4 @@
 /src/.preload.php
 /var/
 .env
-/.env
-/BloG4/.env
 ###< symfony/framework-bundle ###
