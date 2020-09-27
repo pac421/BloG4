@@ -3,10 +3,7 @@ BloG4
 
 BloG4 is a blog website who allow users to post interresting thing about computer-science. This is a school project started in September 2020 at Institut G4 who purpose many features like:
 - A fully secure account
-- An article viewer with:
-  *filter
-  *searcher
-  *sorter
+- An article viewer with filter, searcher and sorter
 - A comments manager
 
 
@@ -50,3 +47,5 @@ php bin/console doctrine:migrations:migrate
 # Start the Symfony server
 symfony server:start
 ```
+
+If all previous commands was executed successfully, you can access the app on https://localhost:8000/.
