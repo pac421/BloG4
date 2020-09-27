@@ -1,0 +1,209 @@
+<!--
+Array required to display this template:
+data_home
+	user
+		id
+		name
+		role
+			id
+			name
+	lst_categories
+		id
+		name
+	lst_fiches
+		id
+		title
+		image
+		content
+		nb_comments
+		date
+			sortable
+			visual
+		user
+			id
+			name
+		lst_categories
+			id
+			name
+		lst_comments
+			id
+			content
+			date
+				sortable
+				visual
+			user
+				id
+				name
+-->
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Fil d'actualités{% endblock %}
+
+{% block body %}
+
+<div>
+	<!-- Navbar -->
+	<nav class="mb-0 navbar navbar-expand-lg navbar-dark primary-color sticky-top">
+		<a class="navbar-brand" href="#">BloG4</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar_collapse" aria-controls="div_navbar_collapse" aria-expanded="false" aria-label="Ouvrir/fermer">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="div_navbar_collapse">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" id="a_navbar_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i> {{ data_home.user.name }}
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="a_navbar_dropdown">
+						<a class="dropdown-item" href="#">Mon profil</a>
+						<a class="dropdown-item" href="#">Déconnexion</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- /Navbar -->
+	
+	<div class="row w-100">
+		<div class="col-2 border-right border-primary z-depth-1-half position-fixed h-100">
+			
+			<!-- Search -->
+			<form class="form-inline d-flex justify-content-center md-form form-sm mt-3">
+				<i class="fas fa-search" aria-hidden="true"></i>
+				<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher une fiche" aria-label="Search">
+			</form>
+			<!-- /Search -->
+			
+			<!-- Categories -->
+			<div class='input-group flex-column'>
+				<div class='ml-3 border-bottom border-grey'>
+					<h5>Catégories</h5>
+				</div>
+				<div class="form-check my-3">
+					<input type="checkbox" class="form-check-input" id="input_categorie_all" checked>
+					<label class="form-check-label" for="input_categorie_all">Toutes</label>
+				</div>
+				{% for categorie in data_home.lst_categories %}
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="input_categorie_{{ categorie.id }}" checked>
+					<label class="form-check-label" for="input_categorie_{{ categorie.id }}">{{ categorie.name }}</label>
+				</div>
+				{% endfor %}
+			</div>
+			<!-- /Categories -->
+		</div>
+		<div class="col-10" id="div_home_fil_actualite">
+			
+			<div class="m-4">
+				<section class="dark-grey-text">
+					
+					<div class="mb-5">
+						<div class="d-flex justify-content-between align-items-center">
+							<h2 class="font-weight-bold"><i class="fa fa-newspaper mr-2"></i>Fil d'actualités</h2>
+							
+							<!-- Material checked -->
+							<div class="switch">
+								<label>
+									Date croissant
+									<input type="checkbox" class="primary-color" checked><span class="lever"></span> 
+									Date décroissant
+								</label>
+							</div>
+							
+							<button class="btn btn-primary"><i class='fa fa-plus-square mr-2'></i>Publier une fiche</button>
+						</div>
+					</div>
+					
+					<!-- Fiche -->
+					{% for fiche in data_home.lst_fiches %}
+					<div class="row">
+						<div class="col-lg-5 col-xl-4">
+							<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+								<img class="img-fluid" src="{{ asset(fiche.image) }}" alt="Image">
+								<a>
+									<div class="mask rgba-white-slight"></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-7 col-xl-8">
+							<a href="#!" class="primary-text">
+								<h6 class="h6 pb-1">
+									{% for categorie in fiche.lst_categories %}
+									<span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>{{ categorie.name }}</span>
+									{% endfor %}
+								</h6>
+							</a>
+							<h4 class="font-weight-bold mb-3"><strong>{{ fiche.title }}</strong></h4>
+							<p class="dark-grey-text">{{ fiche.content }}</p>
+							<p>
+								<i class='fa fa-user mr-2'></i><a class="font-weight-bold">{{ fiche.user.name }}</a><br>
+								<i class='fa fa-calendar mr-2'></i>{{ fiche.date.visual }}
+							</p>
+							
+							<!-- Comments -->
+							<section class="mt-5">
+								<div class="accordion md-accordion" id="div_accordion" role="tablist" aria-multiselectable="true">
+									<div class="card border-0 grey lighten-4">
+
+										<div class="card-header" role="tab" id="div_accordion_heading">
+											<a class="collapsed" data-toggle="collapse" data-parent="#div_accordion" href="#div_accordion_collapse" aria-expanded="false" aria-controls="div_accordion_collapse">
+												<h5 class="mb-0">
+													{{ fiche.nb_comments }} commentaires <i class="fas fa-angle-down rotate-icon"></i>
+												</h5>
+											</a>
+										</div>
+
+										<div id="div_accordion_collapse" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading" data-parent="#div_accordion">
+											<div class="card-body py-0">
+												
+												{% for comment in fiche.lst_comments %}
+												<div class="media d-block d-md-flex mt-4">
+													<div class="media-body text-center text-md-left md-3 ml-0">
+														<span><a class="font-weight-bold mb-0">{{ comment.user.name }}</a>, {{ comment.date.visual }}</span><br>
+														{{ comment.content }}
+													</div>
+												</div>
+												{% endfor %}
+
+												<!-- New comment -->
+												<div class="form-group mt-4">
+													<label for="textarea_comment_add">Écrire un commentaire</label>
+													<textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
+
+													<div class="text-right my-1">
+														<button class="btn btn-primary btn-sm">Publier</button>
+													</div>
+												</div>
+												<!-- /New comment -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<!-- /Comments -->
+						</div>
+					</div>
+					
+					{% if loop.last == false %}
+					<hr class="my-5">
+					{% endif %}
+					
+					{% endfor %}
+					<!-- /Fiche -->
+					
+				</section>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer font-small primary-color position-relative z-depth-1-half">
+	<div class="footer-copyright text-center py-3">© 2020
+		<a href="#"> BloG4</a>
+	</div>
+</footer>
+<!-- Footer -->
+
+{% endblock %}
