@@ -1,8 +1,108 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion/Inscription{% endblock %}
 
 {% block body %}
+
+<div class="bg"></div>
+
+<div class="center-div w-25">
+	<div class="classic-tabs mx-2">
+
+		<ul class="nav tabs-primary" role="tablist">
+			<li class="nav-item w-50 m-0">
+				<a class="nav-link waves-light active show" id="login_btn_connexion" data-toggle="tab" href="#login_div_connexion" role="tab" aria-controls="login_div_connexion" aria-selected="true">
+					<i class="fas fa-user fa-2x pb-2" aria-hidden="true"></i><br><h6 class='m-0'>Connexion</h6>
+				</a>
+			</li>
+			<li class="nav-item w-50 m-0">
+				<a class="nav-link waves-light" id="login_btn_inscription" data-toggle="tab" href="#login_div_inscription" role="tab" aria-controls="login_div_inscription" aria-selected="false">
+					<i class="fas fa-pen fa-2x pb-2" aria-hidden="true"></i><br><h6 class='m-0'>Inscription</h6>
+				</a>
+			</li>
+		</ul>
+
+		<div class="tab-content card">
+			<div class="tab-pane fade active show" id="login_div_connexion" role="tabpanel" aria-labelledby="login_btn_connexion">
+				<form method="post" class="px-2">
+					
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					<!-- E-mail -->
+					<div class="md-form">
+						<i class="fa fa-envelope prefix"></i>
+						<input type="email" id="connexin_input_mail" class="form-control text-dark" value="{{ last_username }}" name="email" autofocus required>
+						<label for="connexin_input_mail">E-mail</label>
+					</div>
+
+					<!-- Mot de passe -->
+					<div class="md-form">
+						<i class="fa fa-unlock prefix"></i>
+						<input type="password" id="connexin_input_password" class="form-control text-dark" name="password" required>
+						<label for="connexin_input_password">Mot de passe</label>
+					</div>
+					
+					<div class="text-center mt-5">
+						<button type="submit" class="btn btn-primary rounded">Se connecter !</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="tab-pane fade" id="login_div_inscription" role="tabpanel" aria-labelledby="login_btn_inscription">
+				<form method="post" action="{{ path('subscribe')}}" class="px-2">
+						
+					<!-- Prénom -->
+					<div class="md-form">
+						<i class="fa fa-user prefix primary"></i>
+						<input type="text" id="inscription_input_lastname" class="form-control text-dark" name="lastname" autofocus required>
+						<label for="inscription_input_lastname">Prénom</label>
+					</div>
+					
+					<!-- Nom -->
+					<div class="md-form">
+						<i class="fa fa-hand-point-right prefix primary"></i>
+						<input type="email" id="inscription_input_firstname" class="form-control text-dark" name="firstname" required>
+						<label for="inscription_input_firstname">Nom</label>
+					</div>
+					
+					<!-- Date de naissance -->
+					<div class="md-form">
+						<i class="fa fa-calendar prefix primary"></i>
+						<input type="text" id="inscription_input_birth" class="form-control text-dark" onfocus="input_date_focus(this)" onblur="input_date_blur(this)" name="bornDate" required>
+						<label for="inscription_input_birth">Date de naissance</label>
+					</div>
+					
+					<!-- E-mail -->
+					<div class="md-form">
+						<i class="fa fa-envelope prefix primary"></i>
+						<input type="email" id="inscription_input_email" class="form-control text-dark" name="email" required>
+						<label for="inscription_input_email">E-mail</label>
+					</div>
+					
+					<!-- Mot de passe -->
+					<div class="md-form">
+						<i class="fa fa-unlock prefix primary"></i>
+						<input type="password" id="inscription_input_password" class="form-control text-dark" name="password" required>
+						<label for="inscription_input_password">Mot de passe</label>
+					</div>
+					
+					<!-- Confirmation mot de passe -->
+					<div class="md-form">
+						<i class="fa fa-unlock prefix primary"></i>
+						<input type="password" id="inscription_input_password2" class="form-control text-dark" name="password" required>
+						<label for="inscription_input_password2">Confirmation MDP</label>
+					</div>
+						
+					<div class="text-center mt-5">
+						<button type="submit" class="rounded btn btn-primary">S'inscrire !</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 
 <form method="post">
     {% if error %}
     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -21,8 +121,8 @@
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" required>
 
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
+    
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <button class="btn btn-lg btn-primary" type="submit">
         Connexion
@@ -55,5 +155,9 @@
         Inscritpion
     </button>
 </form>
-
+ -->
+ 
 {% endblock %}
+
+
+
