@@ -4,7 +4,7 @@ data_home
 	user
 		id
 		name
-		role
+		lst_roles
 			id
 			name
 	lst_categories
@@ -71,23 +71,30 @@ data_home
 			<!-- Search -->
 			<form class="form-inline d-flex justify-content-center md-form form-sm mt-3">
 				<i class="fas fa-search" aria-hidden="true"></i>
-				<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher une fiche" aria-label="Search">
+				<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher une fiche" aria-label="Recherche" id='home_search'>
 			</form>
 			<!-- /Search -->
 			
 			<!-- Categories -->
 			<div class='input-group flex-column'>
-				<div class='ml-3 border-bottom border-grey'>
-					<h5>Catégories</h5>
-				</div>
-				<div class="form-check my-3">
-					<input type="checkbox" class="form-check-input" id="input_categorie_all" checked>
-					<label class="form-check-label" for="input_categorie_all">Toutes</label>
+				<div class='ml-3 border-bottom border-grey mb-3'>
+					<h5>
+						Catégories
+						<span class='float-right'>
+							<a id="home_check_all_categories">
+								<i class='far fa-check-square'></i>
+							</a>
+							&nbsp;|&nbsp;
+							<a id="home_uncheck_all_categories">
+								<i class='far fa-square'></i>
+							</a>
+						</span>
+					</h5>
 				</div>
 				{% for categorie in data_home.lst_categories %}
 				<div class="form-check">
-					<input type="checkbox" class="form-check-input" id="input_categorie_{{ categorie.id }}" checked>
-					<label class="form-check-label" for="input_categorie_{{ categorie.id }}">{{ categorie.name }}</label>
+					<input type="checkbox" class="form-check-input home_input_categorie" id="home_input_categorie_{{ categorie.id }}" checked>
+					<label class="form-check-label" for="home_input_categorie_{{ categorie.id }}">{{ categorie.name }}</label>
 				</div>
 				{% endfor %}
 			</div>
