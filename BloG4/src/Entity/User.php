@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -48,6 +50,16 @@ class User implements UserInterface
      * @ORM\Column(type="date")
      */
     private $bornDate;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="id_user")
+     */
+    private $commentaires;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
 
     
     public function getId(): ?int
@@ -161,6 +173,37 @@ class User implements UserInterface
     public function setBornDate(\DateTimeInterface $bornDate): self
     {
         $this->bornDate = $bornDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getIdUser() === $this) {
+                $commentaire->setIdUser(null);
+            }
+        }
 
         return $this;
     }
