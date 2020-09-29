@@ -27,7 +27,7 @@ class HomeController extends AbstractController
     public function profil(EntityManagerInterface $entityManager)
     {
 
-        if(isset($user))
+        if($user=! null)
         {
 
             $user = $entityManager->getRepository(User::class)->findAll();
@@ -37,6 +37,17 @@ class HomeController extends AbstractController
                 ]);
 
         }
-        
+      
+        return $this->render('home/home.html.twig');
+    }
+
+
+   
+    /**
+     * @Route("/newFiche/{id}", name="newFiche")
+     */
+    public function newFiche()
+    {
+        return $this->render('home/newFiche.html.twig');
     }
 }

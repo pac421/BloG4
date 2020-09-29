@@ -18,11 +18,6 @@ class Fiche
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $dateFiche;
@@ -42,18 +37,7 @@ class Fiche
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
+    
     public function getDateFiche(): ?\DateTimeInterface
     {
         return $this->dateFiche;
