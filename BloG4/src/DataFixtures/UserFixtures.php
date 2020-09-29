@@ -25,9 +25,9 @@ class UserFixtures extends Fixture
 
         $user1 = new User();
 
-                $user1->setEmail("nadjim13-13@homtail.fr");
-                $user1->setFirstname("Admin");
-                $user1->setLastName("Super");
+                $user1->setEmail("nadjim13-13@hotmail.fr");
+                $user1->setFirstname("Nadjim");
+                $user1->setLastName("MOSTEFAOUI");
                 $user1->setBornDate(new \DateTime("02/09/1997"));
                 $user1->setRoles(["ROLE_ADMIN"]);
                 $user1->setPassword($this->passwordEncoder->encodePassword(
@@ -40,14 +40,14 @@ class UserFixtures extends Fixture
 
                 $user2 = new User();
 
-                $user2->setEmail("superadmin@gamil.fr");
-                $user2->setFirstname("Admin");
-                $user2->setLastName("Super");
-                $user2->setBornDate(new \DateTime("20/12/1996"));
+                $user2->setEmail("mathwal@hotmail.fr");
+                $user2->setFirstname("Mathieu");
+                $user2->setLastName("WALCZAK");
+                $user2->setBornDate(new \DateTime("27/01/1999"));
                 $user2->setRoles(["ROLE_ADMIN"]);
                 $user2->setPassword($this->passwordEncoder->encodePassword(
                          $user2,
-                        'password'
+                        '1234'
                      ));
 
                 $manager->persist($user2);
