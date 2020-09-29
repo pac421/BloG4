@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTime;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -23,11 +24,13 @@ class UserFixtures extends Fixture
     {
  
 
+
+
         $user1 = new User();
 
-                $user1->setEmail("nadjim13-13@homtail.fr");
-                $user1->setFirstname("Admin");
-                $user1->setLastName("Super");
+                $user1->setEmail("nadjim13-13@hotmail.fr");
+                $user1->setFirstname("Nadjim");
+                $user1->setLastName("MOSTEFAOUI");
                 $user1->setBornDate(new \DateTime("02/09/1997"));
                 $user1->setRoles(["ROLE_ADMIN"]);
                 $user1->setPassword($this->passwordEncoder->encodePassword(
@@ -40,49 +43,44 @@ class UserFixtures extends Fixture
 
                 $user2 = new User();
 
-                $user2->setEmail("superadmin@gamil.fr");
-                $user2->setFirstname("Admin");
-                $user2->setLastName("Super");
-                $user2->setBornDate(new \DateTime("20/12/1996"));
+                $user2->setEmail("mathwal@hotmail.fr");
+                $user2->setFirstname("Mathieu");
+                $user2->setLastName("WALCZAK");
+                $user2->setBornDate(new \DateTime("27/01/1999"));
                 $user2->setRoles(["ROLE_ADMIN"]);
                 $user2->setPassword($this->passwordEncoder->encodePassword(
                          $user2,
-                        'password'
+                        '1234'
                      ));
 
                 $manager->persist($user2);
 
 
-
-
                 $user3 = new User();
 
-                $user3->setEmail("superadmin@gamil.fr");
-                $user3->setFirstname("Admin");
-                $user3->setLastName("Super");
-                $user3->setBornDate(new \DateTime("20/12/1996"));
+                $user3->setEmail("jasondangel@hotmail.fr");
+                $user3->setFirstname("Jason");
+                $user3->setLastName("DANGEL");
+                $user3->setBornDate(new \DateTime("27/09/2000"));
                 $user3->setRoles(["ROLE_ADMIN"]);
                 $user3->setPassword($this->passwordEncoder->encodePassword(
                          $user3,
-                        'password'
+                        '1234'
                      ));
 
                 $manager->persist($user3);
 
 
-
-
-
                 $user4 = new User();
 
-                $user4->setEmail("superadmin@gamil.fr");
-                $user4->setFirstname("Admin");
-                $user4->setLastName("Super");
-                $user4->setBornDate(new \DateTime("20/12/1996"));
+                $user4->setEmail("paul-alexandre.cieslik@hotmail.com");
+                $user4->setFirstname("Paul-Alexandre");
+                $user4->setLastName("CIESLIK");
+                $user4->setBornDate(new \DateTime("21/01/2000"));
                 $user4->setRoles(["ROLE_ADMIN"]);
                 $user4->setPassword($this->passwordEncoder->encodePassword(
                          $user4,
-                        'password'
+                        '1234'
                      ));
 
                 $manager->persist($user4);

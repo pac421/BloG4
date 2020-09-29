@@ -56,7 +56,7 @@ data_home
 						<i class="fas fa-user"></i> {{ data_home.user.name }}
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="a_navbar_dropdown">
-						<a class="dropdown-item" href="#">Mon profil</a>
+						<a class="dropdown-item" href="{{ path('profil', {'id':app.user.id('id')}) }}">Mon profil</a>
 						<a class="dropdown-item" href="#">Déconnexion</a>
 					</div>
 				</li>

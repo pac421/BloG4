@@ -37,12 +37,10 @@ class HomeController extends AbstractController
                 ]);
 
         }
-      
-        return $this->render('home/home.html.twig');
+    
     }
 
 
-   
     /**
      * @Route("/newFiche/{id}", name="newFiche")
      */
