@@ -44,6 +44,3 @@ function input_date_blur(el){
 		parent.find('label').removeClass("active");
 	}
 };
-
-
-
