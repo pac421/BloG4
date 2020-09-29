@@ -75,14 +75,14 @@ class UserFixtures extends Fixture
 
                 $user4 = new User();
 
-                $user4->setEmail("superadmin@gamil.fr");
-                $user4->setFirstname("Admin");
-                $user4->setLastName("Super");
-                $user4->setBornDate(new \DateTime("20/12/1996"));
+                $user4->setEmail("paul-alexandre.cieslik@hotmail.com");
+                $user4->setFirstname("Paul-Alexandre");
+                $user4->setLastName("CIESLIK");
+                $user4->setBornDate(new \DateTime("21/01/2000"));
                 $user4->setRoles(["ROLE_ADMIN"]);
                 $user4->setPassword($this->passwordEncoder->encodePassword(
                          $user4,
-                        'password'
+                        '1234'
                      ));
 
                 $manager->persist($user4);
