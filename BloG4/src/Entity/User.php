@@ -52,13 +52,15 @@ class User implements UserInterface
     private $bornDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="id_user")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="deleted_on")
      */
-    private $commentaires;
+    private $comments;
+
 
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     
@@ -185,26 +187,35 @@ class User implements UserInterface
         return $this->commentaires;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setIdUser($this);
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setDeletedOn($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removeComment(Comment $comment): self
     {
-        if ($this->commentaires->contains($commentaire)) {
-            $this->commentaires->removeElement($commentaire);
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($commentaire->getIdUser() === $this) {
-                $commentaire->setIdUser(null);
+            if ($comment->getDeletedOn() === $this) {
+                $comment->setDeletedOn(null);
             }
         }
 
         return $this;
     }
+
 }
