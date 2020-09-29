@@ -48,4 +48,4 @@ php bin/console doctrine:migrations:migrate
 symfony server:start
 ```
 
-If all previous commands was executed successfully, you can access the app on https://localhost:8000/.
+If all previous commands was executed successfully, you can access the app on https://127.0.0.1:8000/.
