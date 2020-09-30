@@ -83,4 +83,32 @@ class SecurityController extends AbstractController
          
         
     }
+
+         /**
+     * @Route("/updatepass", name="updatepass")
+     */
+        public function updatepass(EntityManagerInterface $entityManager,Request $request, User $user)
+        {
+
+            $old_pw = $request->request->get('old_pw');
+            $new_pw = $request->request->get('new_pw');
+            $cnew_pw = $request->request->get('cnew_pw');
+            $old_pw->$this->passwordEncoder->encodePassword;
+
+    
+                $user->setPassword($this->passwordEncoder->encodePassword
+                ($user,
+                $new_pw));
+
+
+                $entityManager=$this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_login');
+                
+            }
+            
+            
+        
 }

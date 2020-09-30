@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTime;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -22,6 +23,8 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
  
+
+
 
         $user1 = new User();
 
@@ -53,8 +56,6 @@ class UserFixtures extends Fixture
                 $manager->persist($user2);
 
 
-
-
                 $user3 = new User();
 
                 $user3->setEmail("jasondangel@hotmail.fr");
@@ -68,9 +69,6 @@ class UserFixtures extends Fixture
                      ));
 
                 $manager->persist($user3);
-
-
-
 
 
                 $user4 = new User();
