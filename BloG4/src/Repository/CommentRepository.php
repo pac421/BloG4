@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,10 +19,28 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
+    
+    public function getCommentsByArticleId($article_id): array
+    {           
+		$entityManager = $this->getEntityManager();
+		
+        $result = $entityManager->createQuery(
+            '
+            SELECT C.id, IDENTITY(C.created_on), C.created_at, C.content, IDENTITY(C.fiche), U.firstname, U.lastName
+            FROM App\Entity\Comment C, App\Entity\User U
+            WHERE C.created_on = U.id AND C.deleted_at IS NULL AND C.fiche = :_article_id
+            '
+        )->setParameter('_article_id', $article_id)->getArrayResult();
+        
+        for($i = 0; $i < count($result); $i++){
+			$firstname = $result[$i]['firstname'];
+			$lastname = $result[$i]['lastName'];
+			$result[$i]['name'] = $entityManager->getRepository(User::class)->formatUserName($firstname, $lastname);
+		}
+        
+        return $result;
+    }
 
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
     /*
     public function findByExampleField($value)
     {
@@ -34,9 +53,7 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
     public function findOneBySomeField($value): ?Comment
     {
         return $this->createQueryBuilder('c')

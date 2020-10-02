@@ -16,9 +16,12 @@
     </head>
     <body>
         {% block body %}{% endblock %}
+        
         {% block javascripts %}
         <!-- jQuery -->
 		<script type="text/javascript" src="{{ asset('libraries/jquery/jquery.min.js') }}"></script>
+        <!-- MomentJS -->
+		<script type="text/javascript" src="{{ asset('libraries/moment/moment.js') }}"></script>
 		<!-- TinyMCE -->
 		<script type="text/javascript" src="{{ asset('libraries/tinymce/tinymce.min.js') }}"></script>		
 		<!-- MDBootstrap -->
@@ -28,6 +31,9 @@
 		<script type="text/javascript" src="{{ asset('libraries/mdbootstrap/js/mdb.min.js') }}"></script>
 		<!-- Custom JS -->
 		<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+		{% if app.request.get('_route') == 'home' %}
+		<script type="text/javascript" src="{{ asset('js/home.js') }}"></script>
+		{% endif %}
         {% endblock %}
     </body>
 </html>

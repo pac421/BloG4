@@ -1,0 +1,78 @@
+<!-- Articles -->
+{% for article in data_home.lst_articles %}
+<div class="row">
+	<div class="col-lg-5 col-xl-4">
+		<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+			<img class="img-fluid" src="{{ asset(article.picture) }}" alt="Image">
+			<a>
+				<div class="mask rgba-white-slight"></div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-7 col-xl-8">
+		<a href="#!" class="primary-text">
+			<h6 class="h6 pb-1">
+				{% for category in data_home.lst_categories %}
+				{% if category.id in article.lst_categories %}
+					<span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>{{ category.label }}</span>
+				{% endif %}
+				{% endfor %}
+			</h6>
+		</a>
+		<h4 class="font-weight-bold mb-3"><strong>{{ article.title }}</strong></h4>
+		<p class="dark-grey-text">{{ article.content }}</p>
+		<p>
+			<i class='fa fa-user mr-2'></i><a class="font-weight-bold">{{ article.name }}</a><br>
+			<i class='fa fa-calendar mr-2'></i>{{ article.created_at|date("d/m/Y H:i") }}
+		</p>
+		
+		<!-- Comments -->
+		<section class="mt-5">
+			<div class="accordion md-accordion" id="div_accordion" role="tablist" aria-multiselectable="true">
+				<div class="card border-0 grey lighten-4">
+
+					<div class="card-header" role="tab" id="div_accordion_heading">
+						<a class="collapsed" data-toggle="collapse" data-parent="#div_accordion" href="#div_accordion_collapse" aria-expanded="false" aria-controls="div_accordion_collapse">
+							<h5 class="mb-0">
+								{{ article.lst_comments|length }} commentaires <i class="fas fa-angle-down rotate-icon"></i>
+							</h5>
+						</a>
+					</div>
+
+					<div id="div_accordion_collapse" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading" data-parent="#div_accordion">
+						<div class="card-body py-0">
+							
+							{% for comment in article.lst_comments %}
+							<div class="media d-block d-md-flex mt-4">
+								<div class="media-body text-center text-md-left md-3 ml-0">
+									<span><a class="font-weight-bold mb-0">{{ comment.name }}</a>, {{ comment.created_at|date("d/m/Y H:i") }}</span><br>
+									{{ comment.content }}
+								</div>
+							</div>
+							{% endfor %}
+
+							<!-- New comment -->
+							<div class="form-group mt-4">
+								<label for="textarea_comment_add">Écrire un commentaire</label>
+								<textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
+
+								<div class="text-right my-1">
+									<button class="btn btn-primary btn-sm">Publier</button>
+								</div>
+							</div>
+							<!-- /New comment -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /Comments -->
+	</div>
+</div>
+
+{% if loop.last == false %}
+<hr class="my-5">
+{% endif %}
+
+{% endfor %}
+<!-- /Articles -->

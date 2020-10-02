@@ -4,22 +4,58 @@
 
 {% block body %}
 
+<!--
+Array required to display this template:
+data_home
+	user
+		id
+		name
+		lst_roles
+	lst_category
+		id
+		name
+	lst_fiches
+		id
+		title
+		image
+		content
+		nb_comments
+		date
+			sortable
+			visual
+		user
+			id
+			name
+		lst_categories
+			id
+			name
+		lst_comments
+			id
+			content
+			date
+				sortable
+				visual
+			user
+				id
+				name
+-->
+
 <div>
 	<!-- Navbar -->
 	<nav class="mb-0 navbar navbar-expand-lg navbar-dark primary-color sticky-top">
 		<a class="navbar-brand" href="#">BloG4</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar_collapse" aria-controls="div_navbar_collapse" aria-expanded="false" aria-label="Ouvrir/fermer">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+		<div class="collapse navbar-collapse" id="div_navbar_collapse">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i> Prénom NOM 
+					<a class="nav-link dropdown-toggle" id="a_navbar_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i> {{ data_home.user.name }}
 					</a>
-					<div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+					<div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="a_navbar_dropdown">
 						<a class="dropdown-item" href="{{ path('profil', {'id':app.user.id('id')}) }}">Mon profil</a>
-						<a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a>
+						<a class="dropdown-item" href="#">Déconnexion</a>
 					</div>
 				</li>
 			</ul>
@@ -30,13 +66,14 @@
 	<div class="row w-100">
 		<div class="col-2 border-right border-primary z-depth-1-half position-fixed h-100">
 			
-			<!-- Search form -->
-			<div class="form-inline d-flex justify-content-center md-form form-sm mt-3">
+			<!-- Search -->
+			<form class="form-inline d-flex justify-content-center md-form form-sm mt-3">
 				<i class="fas fa-search" aria-hidden="true"></i>
-				<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher une fiche" aria-label="Recherche" id='home_search'>
-			</div>
+				<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher un mot-clé" aria-label="Recherche" id='home_search'>
+			</form>
+			<!-- /Search -->
 			
-			<!-- Material checked -->
+			<!-- Categories -->
 			<div class='input-group flex-column'>
 				<div class='ml-3 border-bottom border-grey mb-3'>
 					<h5>
@@ -52,52 +89,18 @@
 						</span>
 					</h5>
 				</div>
+				
+				{% for category in data_home.lst_categories %}
 				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked1" checked>
-					<label class="form-check-label" for="materialChecked1">PHP</label>
+					<input type="checkbox" class="form-check-input home_input_categorie" id="home_input_categorie_{{ category.id }}" onclick='load_articles()' value='{{ category.id }}' checked>
+					<label class="form-check-label" for="home_input_categorie_{{ category.id }}">{{ category.label }}</label>
 				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked2" checked>
-					<label class="form-check-label" for="materialChecked2">SQL</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked3" checked>
-					<label class="form-check-label" for="materialChecked3">JavaScript</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked4" checked>
-					<label class="form-check-label" for="materialChecked4">Java</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked5" checked>
-					<label class="form-check-label" for="materialChecked5">Python</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked6" checked>
-					<label class="form-check-label" for="materialChecked6">HTML</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked7" checked>
-					<label class="form-check-label" for="materialChecked7">CSS</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked8" checked>
-					<label class="form-check-label" for="materialChecked8">Organisation personelle</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked9" checked>
-					<label class="form-check-label" for="materialChecked9">Planification</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked10" checked>
-					<label class="form-check-label" for="materialChecked10">Gestion de projet</label>
-				</div>
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="materialChecked11" checked>
-					<label class="form-check-label" for="materialChecked11">Communication orale</label>
-				</div>
+				{% endfor %}
+				
 			</div>
+			<!-- /Categories -->
 		</div>
+		
 		<div class="col-10" id="div_home_fil_actualite">
 			
 			<div class="m-4">
@@ -111,7 +114,7 @@
 							<div class="switch">
 								<label>
 									Date croissant
-									<input id='home_order_date' type="checkbox" class="primary-color" checked><span class="lever"></span> 
+									<input type="checkbox" id='home_order_date' class="primary-color" onclick='load_articles()' checked><span class="lever"></span> 
 									Date décroissant
 								</label>
 							</div>
@@ -122,358 +125,7 @@
 						</div>
 					</div>
 					
-					<!-- Fiche -->
-					<div class="row">
-						<div class="col-lg-5 col-xl-4">
-							<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-								<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="Sample image">
-								<a>
-									<div class="mask rgba-white-slight"></div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-7 col-xl-8">
-							
-							<div class='float-right d-flex flex-row'>
-								<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-								<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-							</div>
-							
-							<a href="#!" class="primary-text">
-								<h6 class="h6 pb-1"><span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>PHP</span></h6>
-							</a>
-							<h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
-							<p class="dark-grey-text">
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br><br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br><br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.
-							</p>
-							<p>
-								<i class='fa fa-user mr-2'></i><a class="font-weight-bold">Prénom Nom</a><br>
-								<i class='fa fa-calendar mr-2'></i>19/04/2018 17:32
-							</p>
-							
-							<!-- Commentaires -->
-							<section class="mt-5">
-								<div class="accordion md-accordion" id="accordionEx1" role="tablist" aria-multiselectable="true">
-									<div class="card border-0 grey lighten-4">
-
-										<div class="card-header" role="tab" id="headingTwo1">
-											<a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1" aria-expanded="false" aria-controls="collapseTwo1">
-												<h5 class="mb-0">
-													2 commentaires <i class="fas fa-angle-down rotate-icon"></i>
-												</h5>
-											</a>
-										</div>
-
-										<div id="collapseTwo1" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
-											<div class="card-body py-0">
-												<div class="media d-block d-md-flex mt-4">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-														Excepteur sint occaecat
-														cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-													</div>
-												</div>
-
-												<div class="media d-block d-md-flex mt-3">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-														atque corrupti
-														quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-														officia deserunt mollitia animi, id est laborum et dolorum fuga.
-													</div>
-												</div>
-
-												<!-- Écrire un commentaire -->
-												<div class="form-group mt-4">
-													<label for="quickReplyFormComment">Écrire un commentaire</label>
-													<textarea class="form-control" id="quickReplyFormComment" rows="3"></textarea>
-
-													<div class="text-right my-1">
-														<button class="btn btn-primary btn-sm" type="submit">Publier</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-							<!-- /Commentaires -->
-						</div>
-					</div>
-					<!-- /Fiche -->
-
-					<hr class="my-5">
-					
-					<!-- Fiche -->
-					<div class="row">
-						<div class="col-lg-5 col-xl-4">
-							<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-								<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg" alt="Sample image">
-								<a>
-									<div class="mask rgba-white-slight"></div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-7 col-xl-8">
-							
-							<div class='float-right d-flex flex-row'>
-								<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-								<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-							</div>
-							
-							<a href="#!" class="primary-text">
-								<h6 class="h6 pb-1"><span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>JavaScript</span> <span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>PHP</span></h6>
-							</a>
-							<h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
-							<p class="dark-grey-text">Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.</p>
-							<p>
-								<i class='fa fa-user mr-2'></i><a class="font-weight-bold">Prénom Nom</a><br>
-								<i class='fa fa-calendar mr-2'></i>19/04/2018 17:32
-							</p>
-							<!-- Commentaires -->
-							<section class="mt-5">
-								<div class="accordion md-accordion" id="accordionEx2" role="tablist" aria-multiselectable="true">
-									<div class="card border-0 grey lighten-4">
-
-										<div class="card-header" role="tab" id="headingTwo1">
-											<a class="collapsed" data-toggle="collapse" data-parent="#accordionEx2" href="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
-												<h5 class="mb-0">
-													3 commentaires <i class="fas fa-angle-down rotate-icon"></i>
-												</h5>
-											</a>
-										</div>
-
-										<div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2" data-parent="#accordionEx2">
-											<div class="card-body py-0">
-												<div class="media d-block d-md-flex mt-4">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-														Excepteur sint occaecat
-														cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-													</div>
-												</div>
-
-												<div class="media d-block d-md-flex mt-3">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-														atque corrupti
-														quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-														officia deserunt mollitia animi, id est laborum et dolorum fuga.
-													</div>
-												</div>
-												
-												<div class="media d-block d-md-flex mt-4">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-														Excepteur sint occaecat
-														cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-													</div>
-												</div>
-
-												<!-- Écrire un commentaire -->
-												<div class="form-group mt-4">
-													<label for="quickReplyFormComment">Écrire un commentaire</label>
-													<textarea class="form-control" id="quickReplyFormComment" rows="3"></textarea>
-
-													<div class="text-right my-1">
-														<button class="btn btn-primary btn-sm" type="submit">Publier</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-							<!-- /Commentaires -->
-						</div>
-					</div>
-					<!-- /Fiche -->
-					
-					<hr class="my-5">
-					
-					<!-- Fiche -->
-					<div class="row">
-						<div class="col-lg-5 col-xl-4">
-							<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-								<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/6-col/img%20(1).jpg" alt="Sample image">
-								<a>
-									<div class="mask rgba-white-slight"></div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-7 col-xl-8">
-							
-							<div class='float-right d-flex flex-row'>
-								<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-								<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-							</div>
-							
-							<a href="#!" class="primary-text">
-								<h6 class="h6 pb-1"><span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>SQL</span></h6>
-							</a>
-							<h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
-							<p class="dark-grey-text">
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br><br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br><br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.<br>
-								Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.
-							</p>									<p>
-								<i class='fa fa-user mr-2'></i><a class="font-weight-bold">Prénom Nom</a><br>
-								<i class='fa fa-calendar mr-2'></i>19/04/2018 17:32
-							</p>
-							<!-- Commentaires -->
-							<section class="mt-5">
-								<div class="accordion md-accordion" id="accordionEx3" role="tablist" aria-multiselectable="true">
-									<div class="card border-0 grey lighten-4">
-
-										<div class="card-header" role="tab" id="headingTwo3">
-											<a class="collapsed" data-toggle="collapse" data-parent="#accordionEx3" href="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
-												<h5 class="mb-0">
-													0 commentaires <i class="fas fa-angle-down rotate-icon"></i>
-												</h5>
-											</a>
-										</div>
-
-										<div id="collapseTwo3" class="collapse" role="tabpanel" aria-labelledby="headingTwo3" data-parent="#accordionEx3">
-											<div class="card-body py-0">
-
-												<!-- Écrire un commentaire -->
-												<div class="form-group mt-4">
-													<label for="quickReplyFormComment">Écrire un commentaire</label>
-													<textarea class="form-control" id="quickReplyFormComment" rows="3"></textarea>
-
-													<div class="text-right my-1">
-														<button class="btn btn-primary btn-sm" type="submit">Publier</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-							<!-- /Commentaires -->
-						</div>
-					</div>
-					<!-- Fiche -->
-					
-					<hr class="my-5">
-					
-					<!-- Fiche -->
-					<div class="row">
-						<div class="col-lg-5 col-xl-4">
-							<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-								<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/nature-sm.jpg" alt="Sample image">
-								<a>
-									<div class="mask rgba-white-slight"></div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-7 col-xl-8">
-							
-							<div class='float-right d-flex flex-row'>
-								<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-								<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-							</div>
-							
-							<a href="#!" class="primary-text">
-								<h6 class="h6 pb-1"><span class="badge badge-primary"><i class="fas fa-hashtag pr-1"></i>PHP</span></h6>
-							</a>
-							<h4 class="font-weight-bold mb-3"><strong>Title of the news</strong></h4>
-							<p class="dark-grey-text">Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus et aut officiis cum soluta nobis est eligendi placeat facere aut rerum.</p>
-							<p>
-								<i class='fa fa-user mr-2'></i><a class="font-weight-bold">Prénom Nom</a><br>
-								<i class='fa fa-calendar mr-2'></i>19/04/2018 17:32
-							</p>
-							<!-- Commentaires -->
-							<section class="mt-5">
-								<div class="accordion md-accordion" id="accordionEx4" role="tablist" aria-multiselectable="true">
-									<div class="card border-0 grey lighten-4">
-
-										<div class="card-header" role="tab" id="headingTwo4">
-											<a class="collapsed" data-toggle="collapse" data-parent="#accordionEx4" href="#collapseTwo4" aria-expanded="false" aria-controls="collapseTwo4">
-												<h5 class="mb-0">
-													2 commentaires <i class="fas fa-angle-down rotate-icon"></i>
-												</h5>
-											</a>
-										</div>
-
-										<div id="collapseTwo4" class="collapse" role="tabpanel" aria-labelledby="headingTwo4" data-parent="#accordionEx4">
-											<div class="card-body py-0">
-												<div class="media d-block d-md-flex mt-4">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-														Excepteur sint occaecat
-														cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-													</div>
-												</div>
-
-												<div class="media d-block d-md-flex mt-3">
-													<div class="media-body text-center text-md-left md-3 ml-0">
-														<div class='float-right d-flex flex-row'>
-															<a href="#" title="Éditer"><i class="fa fa-edit fa-xs text-dark mr-2"></i></a>
-															<a href="#" title="Supprimer"><i class="fa fa-trash fa-xs text-dark"></i></a>
-														</div>
-														<span><a class="font-weight-bold mb-0">Prénom Nom</a>, 19/04/2018 17:32</span><br>
-														At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-														atque corrupti
-														quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-														officia deserunt mollitia animi, id est laborum et dolorum fuga.
-													</div>
-												</div>
-
-												<!-- Écrire un commentaire -->
-												<div class="form-group mt-4">
-													<label for="quickReplyFormComment">Écrire un commentaire</label>
-													<textarea class="form-control" id="quickReplyFormComment" rows="3"></textarea>
-
-													<div class="text-right my-1">
-														<button class="btn btn-primary btn-sm" type="submit">Publier</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-							<!-- /Commentaires -->
-						</div>
-					</div>
-					<!-- Fiche -->
+					<div id='home_div_articles' class='d-flex flex-column'></div>
 
 				</section>
 			</div>
@@ -481,7 +133,7 @@
 	</div>
 </div>
 
-<!-- Footer -->
+<!-- Footer --
 <footer class="page-footer font-small primary-color position-relative z-depth-1-half">
 	<div class="footer-copyright text-center py-3">© 2020
 		<a href="#"> BloG4</a>
@@ -489,8 +141,10 @@
 </footer>
 <!-- Footer -->
 
-<!--
-<a href= {{ path('profil', {'id': app.user.id}) }}>Profil</a>
--->
+<script type='text/javascript'>
+var data_home = {{ data_home|json_encode|raw }};
+</script>
 
 {% endblock %}
+
+

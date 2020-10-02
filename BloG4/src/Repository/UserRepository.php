@@ -36,9 +36,33 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
+    public function getUserDataById($id): array
+    {     
+        $result = $this->createQueryBuilder('u')
+            ->where('u.id = :_id')
+            ->setParameter('_id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+        
+        $result = $result[0];
+        
+        $firstname = $result['firstname'];
+        $lastname = $result['lastName'];
+        $result['name'] = $this->formatUserName($firstname, $lastname);
+
+        return $result;
+    }
+    
+    public function formatUserName($firstname, $lastname)
+    {
+		$firstname = ucwords(strtolower($firstname), "-"); // Set firstname like : Jean-Pierre
+		$lastname  = strtoupper($lastname); // Set lastname like : FOUCAULT
+		
+        return $firstname.' '.$lastname;
+    }
+
     /*
     public function findByExampleField($value)
     {
@@ -51,9 +75,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
-    */
 
-    /*
     public function findOneBySomeField($value): ?User
     {
         return $this->createQueryBuilder('u')

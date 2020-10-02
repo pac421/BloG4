@@ -18,10 +18,16 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
-
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
+    
+    public function getAllCategories(): array
+    {     
+        return $this->createQueryBuilder('c')
+            ->where('c.deleted_at IS NULL')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+    
     /*
     public function findByExampleField($value)
     {
@@ -34,9 +40,7 @@ class CategoryRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
     public function findOneBySomeField($value): ?Category
     {
         return $this->createQueryBuilder('c')
