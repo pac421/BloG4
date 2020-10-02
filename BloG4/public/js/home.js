@@ -88,14 +88,15 @@ function select_and_order_articles(lst_selected_categories, selected_date_order,
 	
 	// Sort articles with searched string
 	for(let i = 0; i < lst_selected_and_ordered_articles.length; i++) {
+		lst_selected_and_ordered_articles[i].title = lst_selected_and_ordered_articles[i].title.replaceAll('<span class="primary-color white-text">', '').replaceAll('</span>', '');
 		lst_selected_and_ordered_articles[i].content = lst_selected_and_ordered_articles[i].content.replaceAll('<span class="primary-color white-text">', '').replaceAll('</span>', '');
 	}
-	console.log(lst_selected_and_ordered_articles);
 	if(searched_str != ''){
 		
-		lst_selected_and_ordered_articles = lst_selected_and_ordered_articles.filter(article => article.content.includes(searched_str));
+		lst_selected_and_ordered_articles = lst_selected_and_ordered_articles.filter(article => article.content.includes(searched_str) || article.title.includes(searched_str));
 		
 		for(let i = 0; i < lst_selected_and_ordered_articles.length; i++) {
+			lst_selected_and_ordered_articles[i].title = lst_selected_and_ordered_articles[i].title.replaceAll(searched_str, '<span class="primary-color white-text">'+searched_str+'</span>');
 			lst_selected_and_ordered_articles[i].content = lst_selected_and_ordered_articles[i].content.replaceAll(searched_str, '<span class="primary-color white-text">'+searched_str+'</span>');
 		}
 	}
