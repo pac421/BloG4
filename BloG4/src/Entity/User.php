@@ -51,6 +51,17 @@ class User implements UserInterface
      */
     private $bornDate;
 
+  /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="deleted_on")
+     */
+    private $comments;
+
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
 
     
     public function getId(): ?int

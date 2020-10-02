@@ -13,12 +13,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
 {
-    private $user;
 
-    public function __construct(User $user, EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->$user = $user;
     }
    
     /**
