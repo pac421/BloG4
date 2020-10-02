@@ -2,12 +2,15 @@
 
 {% block body %}
 
+<form action="{{ path('postFiche', {'id':app.user.id('id')}) }}" methode="post">
 <label for="inputTitle">Titre</label>
     <input type="text" name="title" id="inputTitle" class="form-control" required>
 
     <label for="inputText">Texte</label>
     <input type="text" name="text" id="inputText" class="form-control" required>
 
-    <label for="inputFirstName">Nom</label>
-    <input type="text" name="firstname" id="inputFirstName" class="form-control" required>
+    <input type="file" name="images" id="fileToUpload"><br>
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
 {% endblock %}

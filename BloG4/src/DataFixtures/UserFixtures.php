@@ -23,15 +23,12 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
  
-
-
-
         $user1 = new User();
 
                 $user1->setEmail("nadjim13-13@hotmail.fr");
                 $user1->setFirstname("Nadjim");
                 $user1->setLastName("MOSTEFAOUI");
-                $user1->setBornDate(new \DateTime("02/09/1997"));
+                $user1->setBornDate(new DateTime("02/09/1997"));
                 $user1->setRoles(["ROLE_ADMIN"]);
                 $user1->setPassword($this->passwordEncoder->encodePassword(
                          $user1,

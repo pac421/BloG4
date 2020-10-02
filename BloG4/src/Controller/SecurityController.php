@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 class SecurityController extends AbstractController
 {
 
@@ -53,7 +54,7 @@ class SecurityController extends AbstractController
      /**
      * @Route("/subscribe", name="subscribe")
      */
-    public function subscribe(EntityManagerInterface $entityManager,Request $request, AuthenticationUtils $authenticationUtils)
+    public function subscribe(EntityManagerInterface $entityManager,Request $request)
     {
 
         $email = $request->request->get('email');
@@ -82,33 +83,32 @@ class SecurityController extends AbstractController
         }
          
         
-    }
+    }    
 
-         /**
-     * @Route("/updatepass", name="updatepass")
+
+    /**
+     * @Route("/change_user_password", name="change_user_password")
      */
-        public function updatepass(EntityManagerInterface $entityManager,Request $request, User $user)
-        {
+    public function change_user_password(EntityManagerInterface $entityManager, Request $request, UserPasswordEncoderInterface $passwordEncoder, User $user) 
+    {
+        $old_pwd = $request->get('old_pw'); 
+        $new_pwd = $request->get('new_pw'); 
+        $new_pwd_confirm = $request->get('cnew_pw');
 
-            $old_pw = $request->request->get('old_pw');
-            $new_pw = $request->request->get('new_pw');
-            $cnew_pw = $request->request->get('cnew_pw');
-            $old_pw->$this->passwordEncoder->encodePassword;
+       $checkPass = $passwordEncoder->isPasswordValid($user, $old_pwd);
+       if($checkPass === true) 
+       {
 
-    
-                $user->setPassword($this->passwordEncoder->encodePassword
-                ($user,
-                $new_pw));
+            $user->setPassword($this->passwordEncoder->encodePassword
+            ($user,
+            $new_pwd));
 
+            $entityManager=$this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-                $entityManager=$this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                return $this->redirectToRoute('app_login');
-                
-            }
-            
-            
-        
+            return $this->redirectToRoute('home');
+               
+       }
+    }       
 }

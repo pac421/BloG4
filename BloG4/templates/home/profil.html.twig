@@ -7,15 +7,11 @@
 <p>Nom : {{ app.user.lastname }}</p>
 <p>Password : ********</p><a href="#">Changer le mot de passe</a><br>
 
-
-<form action="{{ path('updatepass') }}" method="post">
-        <label>Ancien mot de passe : <input type="password" name="old_pw" required></label><br>
-        <label>Nouveau mot de passe : <input type="password" name="new_pw" required></label><br>
-        <label>Confirmer le mot de passe : <input type="password" name="cnew_pw" required></label><br>
-        <button type="submit" class="btn btn-primary">Modifier</button>
-    </form>
-
-
-
+<form action="{{ path('change_user_password')}}" method="post">
+    <label>Ancien mot de passe : <input type="password" name="old_pw" required></label><br>
+    <label>Nouveau mot de passe : <input type="password" name="new_pw" required></label><br>
+    <label>Confirmer le mot de passe : <input type="password" name="cnew_pw" required></label><br>
+    <button type="submit" class="btn btn-primary">Modifier</button>
+</form>
 
 {% endblock %}

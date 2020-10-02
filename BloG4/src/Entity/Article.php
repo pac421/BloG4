@@ -135,7 +135,7 @@ class Article
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->date = new \DateTime('now');
     }
 
     public function setCreatedAt(\DateTimeInterface $created_at): self
