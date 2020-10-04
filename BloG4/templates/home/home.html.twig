@@ -53,7 +53,7 @@ data_home
 					<a class="nav-link dropdown-toggle" id="a_navbar_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<i class="fas fa-user"></i> {{ data_home.user.name }}
 					</a>
-					<div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="a_navbar_dropdown">
+					<div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="a_navbar_dropdown">
 						<a class="dropdown-item" href="{{ path('profil', {'id':app.user.id('id')}) }}">Mon profil</a>
 						<a class="dropdown-item" href="#">Déconnexion</a>
 					</div>
@@ -144,18 +144,18 @@ data_home
 						</p>
 
 						<section class="mt-5">
-							<div class="accordion md-accordion" id="div_accordion" role="tablist" aria-multiselectable="true">
+							<div class="accordion md-accordion" id="div_accordion_[article_id]" role="tablist" aria-multiselectable="true">
 								<div class="card border-0 grey lighten-4">
 
-									<div class="card-header" role="tab" id="div_accordion_heading">
-										<a class="collapsed" data-toggle="collapse" data-parent="#div_accordion" href="#div_accordion_collapse" aria-expanded="false" aria-controls="div_accordion_collapse">
+									<div class="card-header" role="tab" id="div_accordion_heading_[article_id]">
+										<a class="collapsed" data-toggle="collapse" data-parent="#div_accordion_[article_id]" href="#div_accordion_collapse_[article_id]" aria-expanded="false" aria-controls="div_accordion_collapse_[article_id]">
 											<h5 class="mb-0">
 												[comments_number] commentaires <i class="fas fa-angle-down rotate-icon"></i>
 											</h5>
 										</a>
 									</div>
 
-									<div id="div_accordion_collapse" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading" data-parent="#div_accordion">
+									<div id="div_accordion_collapse_[article_id]" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading_[article_id]" data-parent="#div_accordion_[article_id]">
 										<div class="card-body py-0">
 
 											[article_comments]

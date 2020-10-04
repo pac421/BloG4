@@ -148,6 +148,7 @@ function display_articles(lst_selected_and_ordered_articles){
 		article_html += $('#home_exemple_article')[0].innerHTML;
 		
 		article_html = article_html
+			.replaceAll('[article_id]', id)
 			.replace('[article_title]', title)
 			.replace('[article_picture]', picture)
 			.replace('[article_name]', name)
