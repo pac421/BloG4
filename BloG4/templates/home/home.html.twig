@@ -55,7 +55,7 @@ data_home
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="a_navbar_dropdown">
 						<a class="dropdown-item" href="{{ path('profil', {'id':app.user.id('id')}) }}">Mon profil</a>
-						<a class="dropdown-item" href="#">Déconnexion</a>
+						<a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a>
 					</div>
 				</li>
 			</ul>

@@ -3,7 +3,7 @@
 {% block body %}
 
 <form action="{{ path('postFiche', {'id':app.user.id('id')}) }}" methode="post">
-<label for="inputTitle">Titre</label>
+    <label for="inputTitle">Titre</label>
     <input type="text" name="title" id="inputTitle" class="form-control" required>
 
     <label for="inputText">Texte</label>
@@ -11,6 +11,17 @@
 
     <input type="file" name="images" id="fileToUpload"><br>
 
+    {% for category in data_home.lst_categories %}
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input home_input_categorie" id="home_input_categorie_{{ category.id }}"
+            onclick='load_articles()' value='{{ category.id }}' name="categoryId" checked>
+        <label class="form-check-label" for="home_input_categorie_{{ category.id }}">{{ category.label }}</label>
+    </div>
+    {% endfor %}
+
     <button type="submit" class="btn btn-primary">Ajouter</button>
-    </form>
+
+
+
+</form>
 {% endblock %}

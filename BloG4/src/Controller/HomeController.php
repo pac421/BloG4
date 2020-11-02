@@ -57,49 +57,29 @@ class HomeController extends AbstractController
     /**
      * @Route("/newFiche", name="newFiche")
      */
-    public function newFiche()
+    public function newFiche(EntityManagerInterface $entityManager)
     {
-        return $this->render('home/newFiche.html.twig');
+
+        $data_home = []; // This table will contain all the data required by the home page
+		$data_home['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
+        return $this->render('home/newFiche.html.twig', ['data_home' => $data_home]);
     }
 
     /**
      * @Route("/postFiche/{id}", name="postFiche")
      */
-    public function postFiche(Request $request, EntityManagerInterface $entityManager, User $user)
+    public function postFiche(Request $request, EntityManagerInterface $entityManager)
     {
         
         $title = $request->get('title'); 
         $text = $request->get('text'); 
         $images = $request->get('images');
-        if(isset($title) && isset($text) && isset($name)){
+        $categoryId = $request->request->get('categoryId');
 
-            foreach($images as $image){
-                // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-
-                $image->move(
-                    $this->getParameter('/public/pictures/article'),
-                    $fichier
-                );
-
-
-            }
-
-            $article = new Article();
-                $article->setTitle($title);
-                $article->setContent($text);
-                $article->setPicture($images);
-                $article->setCreatedOn($user->getId());
-                $article->setCreatedAt($article->getCreatedAt());
-                $article->setLstCategories(['Php']);
+        
                 
-                $entityManager=$this->getDoctrine()->getManager();
-                $entityManager->persist($article);
-                $entityManager->flush();
 
-                return $this->render('home/home.html.twig');
-        }
-
-        return $this->render('home/newFiche.html.twig');
+                return $this->redirectToRoute('home');
+        
     }
 }
