@@ -118,10 +118,46 @@ function display_articles(lst_selected_and_ordered_articles){
 		let name = article.name;
 		let content = article.content;
 		let created_at = moment(article.created_at.date).format("DD/MM/YYYY HH:mm:ss");
+		
+		// Catégories
 		let lst_categories = article.lst_categories;
+		let categories_html = '';
+		$.each(lst_categories, function(i, category){
+			let category_label = data_home.lst_categories.find(cat => cat.id == category).label;
+			categories_html += '<span class="badge badge-primary mr-1">'+category_label+'</span>';
+		});
+		
+		// Commentaires
 		let lst_comments = article.lst_comments;
+		let nb_comments = lst_comments.length;
+		let comments_html = '';
+		$.each(lst_comments, function(i, comment){
+			console.log(comment);
 			
-		let article_html = '<div class="mb-3">'+id+'</br>'+title+'</br>'+name+'</br>'+content+'</br>'+created_at+'</div>';
+			let com_name = comment.name;
+			let com_content = comment.content;
+			let com_created_at = moment(comment.created_at.date).format("DD/MM/YYYY HH:mm:ss");
+			
+			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><span><a class="font-weight-bold mb-0">'+com_name+'</a>, '+com_created_at+'</span><br>'+com_content+'</div></div>';
+		});
+		
+		let article_html = '';
+		if(i != 0){
+			article_html += '<hr class="my-5">';
+		}
+		article_html += $('#home_exemple_article')[0].innerHTML;
+		
+		article_html = article_html
+			.replaceAll('[article_id]', id)
+			.replace('[article_title]', title)
+			.replace('[article_picture]', picture)
+			.replace('[article_name]', name)
+			.replace('[article_content]', content)
+			.replace('[article_date]', created_at)
+			.replace('[comments_number]', nb_comments)
+			.replace('[article_categories]', categories_html)
+			.replace('[article_comments]', comments_html)
+		;
 		
 		$('#home_div_articles').append(article_html);
 	});
@@ -141,4 +177,21 @@ $('#home_uncheck_all_categories').click(function() {
     console.log('evt home_uncheck_all_categories click start');
     $('.home_input_categorie').prop('checked', false);
     load_articles();
+});
+
+$('#btn_scroll_to_top').click(function() {
+	console.log('evt btn_scroll_to_top click start');
+	$('#div_home_fil_actualite').animate({ scrollTop: 0 }, 500);
+});
+
+$("#div_home_fil_actualite").scroll(function() {
+	if($(this).scrollTop() > 0) {
+		if($("#div_scroll_to_top").hasClass("invisible")){
+			console.log("show scroll-to-top btn");
+			$('#div_scroll_to_top').removeClass('invisible');
+		}
+	} else {
+		console.log("hide scroll-to-top btn");
+		$('#div_scroll_to_top').addClass('invisible');
+	}
 });
