@@ -6,18 +6,12 @@ use App\Entity\User;
 use App\Entity\Category;
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Entity\Images;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class HomeController extends AbstractController
 {
@@ -50,12 +44,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil")
      */
-    public function profil(EntityManagerInterface $entityManager)
+    public function profil(EntityManagerInterface $entityManager, int $id)
     {
         if($user =! null)
         {
             $user = $entityManager->find(User::class, $this->getUser());
-            $article = $entityManager->getRepository(Article::class)->findAll();
+            $article = $entityManager->getRepository(Article::class)->findBy(['created_on' => $id]);
 
                 return $this->render('home/profil.html.twig', [
                     'user' => $user,
@@ -87,7 +81,7 @@ class HomeController extends AbstractController
         $title = $request->get('title'); 
         $text = $request->get('text');
         
-        $categoryId= $request->get('categoryId');
+        $categoryId[]= $request->get('categoryId');
 
         if(isset($user)){
 
@@ -95,7 +89,7 @@ class HomeController extends AbstractController
         $article = new Article();
                 $article->setTitle($title);
                 $article->setContent($text);
-                $article->setPicture("public/pictures/article/test.jpg");
+                $article->setPicture("pictures/article/test.jpg");
                 $article->setCreatedAt(new \DateTime('now'));
                 $article->setLstCategories($categoryId);
                 $article->setCreatedOn($user);
@@ -138,14 +132,14 @@ class HomeController extends AbstractController
     /**
      * @Route("/post_commentaire/{id}", name="post_commentaire")
      */
-    public function post_commentaire(Request $request, EntityManagerInterface $entityManager)
+    public function post_commentaire(Request $request, EntityManagerInterface $entityManager, int $id)
     {
         $user = $entityManager->find(User::class, $this->getUser());
-        $article = $entityManager->getRepository(Article::class);
+        $article = $entityManager->getRepository(Article::class)->find($id);
         $text = $request->get('text'); 
 
 
-        $comment = new Comment();
+                $comment = new Comment();
                 $comment->setContent($text);
                 $comment->setCreatedAt(new \DateTime('now'));
                 $comment->setCreatedOn($user);

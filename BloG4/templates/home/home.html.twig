@@ -80,16 +80,25 @@
 							<h4 class="font-weight-bold mb-3"><strong>[article_title]</strong></h4>
 							<p class="dark-grey-text">[article_content]</p>
 							<div class="d-flex justify-content-between align-items-center">
+
+							{% if is_granted('ROLE_ADMIN') %}
 								<div>
 									<i class='fa fa-user mr-2'></i><a class="font-weight-bold">[article_name]</a><br>
 									<i class='fa fa-calendar mr-2'></i>[article_date]
 								</div>
+								{% endif %}
+
 								<div>
 									<a href="edit?id=[article_id]" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
 									<a href="delete?id=[article_id]" title="Supprimer" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
 								</div>
 							</div>
 
+							
+							{% for article in data.lst_articles %}
+						<form action="{{ path('post_commentaire', {'id':article.id}) }}" method="post">
+							{% endfor %}
+						  
 							<section class="mt-5">
 								<div class="accordion md-accordion" id="div_accordion_[article_id]" role="tablist" aria-multiselectable="true">
 									<div class="card border-0 grey lighten-4">
@@ -109,10 +118,10 @@
 
 												<div class="form-group mt-4">
 													<label for="textarea_comment_add">Écrire un commentaire</label>
-													<textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
+													<textarea class="form-control" name="text" id="textarea_comment_add" rows="3"></textarea>
 
 													<div class="text-right my-1">
-														<button class="btn btn-primary btn-sm">Publier</button>
+														<button type="submit" class="btn btn-primary btn-sm">Publier</button>
 													</div>
 												</div>
 											</div>
@@ -120,6 +129,8 @@
 									</div>
 								</div>
 							</section>
+							
+						</form>
 						</div>
 					</div>
 					<hr class="my-5">
