@@ -87,7 +87,7 @@ class SecurityController extends AbstractController
      */
     public function change_user_password(EntityManagerInterface $entityManager, Request $request, UserPasswordEncoderInterface $passwordEncoder) 
     {
-        $user = $entityManager->find(User::class, 1);
+        $user = $entityManager->find(User::class, $this->getUser());
         $old_pwd = $request->get('old_pw'); 
         $new_pwd = $request->get('new_pw'); 
         $new_pwd_confirm = $request->get('cnew_pw');
@@ -105,8 +105,33 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('profil');
                
        }
-    }       
+    }
+    
+    /**
+     * @Route("/change_name", name="change_name")
+     */
+    public function change_name (EntityManagerInterface $entityManager, Request $request) 
+    {
+        $user = $entityManager->find(User::class, $this->getUser());
+        $firstname = $request->get('firstname'); 
+        $lastname = $request->get('lastname'); 
+
+
+       if(isset($user)) 
+       {
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+
+
+            $entityManager=$this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profil');
+               
+       }
+    }
 }

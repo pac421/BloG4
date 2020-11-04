@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+<form action="{{ path('sendemail')}}" method="post">
+    <label>E-mail <input type="email" name="email" required></label><br>
+    <label>Sujet <input type="text" name="subject" required></label><br>
+    <label>Message <input type="text" name="msg" required></label><br>
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+</form>
+
+{% endblock %}

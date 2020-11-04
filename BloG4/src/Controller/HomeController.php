@@ -6,10 +6,18 @@ use App\Entity\User;
 use App\Entity\Category;
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Entity\Images;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class HomeController extends AbstractController
 {
@@ -35,7 +43,7 @@ class HomeController extends AbstractController
 			$article_id = $data['lst_articles'][$i]['id'];
             $data['lst_articles'][$i]['lst_comments'] = $entityManager->getRepository(Comment::class)->getCommentsByArticleId($article_id);
 		}
-		
+
         return $this->render('home/home.html.twig', ['data' => $data]);
     }
 
@@ -47,9 +55,11 @@ class HomeController extends AbstractController
         if($user =! null)
         {
             $user = $entityManager->getRepository(User::class)->findAll();
+            $article = $entityManager->getRepository(Article::class)->findAll();
         
                 return $this->render('home/profil.html.twig', [
-                    'user' => $user
+                    'user' => $user,
+                    'article'=> $article
                 ]);
         }
     }
@@ -63,13 +73,7 @@ class HomeController extends AbstractController
 
         $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
         $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
-        $data['lst_articles'] = $entityManager->getRepository(Article::class)->getAllArticles();
 
-        for($i = 0; $i < count($data['lst_articles']); $i++){
-
-            $article_id = $data['lst_articles'][$i]['id'];
-            $data['lst_articles'][$i]['lst_comments'] = $entityManager->getRepository(Comment::class)->getCommentsByArticleId($article_id);
-        }
         return $this->render('home/newFiche.html.twig', ['data' => $data]);
     }
 
@@ -78,16 +82,27 @@ class HomeController extends AbstractController
      */
     public function postFiche(Request $request, EntityManagerInterface $entityManager)
     {
-        
+
+        $user = $entityManager->find(User::class, $this->getUser());
+
+
         $title = $request->get('title'); 
         $text = $request->get('text'); 
-        $images = $request->get('images');
-        $categoryId = $request->request->get('categoryId');
-
         
-                
+        $categoryId[]= $request->get('categoryId');;
 
-                return $this->redirectToRoute('home');
-        
-    }
+        $article = new Article();
+                $article->setTitle($title);
+                $article->setContent($text);
+                $article->setPicture("public/pictures/article/test.jpg");
+                $article->setCreatedAt(new \DateTime('now'));
+                $article->setLstCategories($categoryId);
+                $article->setCreatedOn($user);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
 }
