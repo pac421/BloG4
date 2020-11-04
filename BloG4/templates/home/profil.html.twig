@@ -10,6 +10,7 @@
 
 
 <form action="{{ path('change_name')}}" method="post">
+
     <label>Nom : <input type="text" name="lastname" required></label><br>
     <label>Prenom : <input type="text" name="firstname" required></label><br>
     <button type="submit" class="btn btn-primary">Modifier</button>
@@ -27,6 +28,7 @@
 
 
     {{ article.id }}<br>
+    {{ article.createdon.id }}<br>
     {{ article.title }}<br>
     {{ article.createdon.firstname }}<br>
     {{ article.createdon.lastname }}<br>
