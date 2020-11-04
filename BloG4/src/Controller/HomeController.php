@@ -54,9 +54,9 @@ class HomeController extends AbstractController
     {
         if($user =! null)
         {
-            $user = $entityManager->getRepository(User::class)->findAll();
+            $user = $entityManager->find(User::class, $this->getUser());
             $article = $entityManager->getRepository(Article::class)->findAll();
-        
+
                 return $this->render('home/profil.html.twig', [
                     'user' => $user,
                     'article'=> $article
@@ -84,11 +84,40 @@ class HomeController extends AbstractController
     {
 
         $user = $entityManager->find(User::class, $this->getUser());
+        $title = $request->get('title'); 
+        $text = $request->get('text');
+        
+        $categoryId= $request->get('categoryId');
+
+        if(isset($user)){
 
 
+        $article = new Article();
+                $article->setTitle($title);
+                $article->setContent($text);
+                $article->setPicture("public/pictures/article/test.jpg");
+                $article->setCreatedAt(new \DateTime('now'));
+                $article->setLstCategories($categoryId);
+                $article->setCreatedOn($user);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            
+        }
+        return $this->redirectToRoute('home');
+        }
+
+        /**
+     * @Route("/editFiche/{id}", name="editFiche")
+     */
+    public function editFiche(Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $user = $entityManager->find(User::class, $this->getUser());
         $title = $request->get('title'); 
         $text = $request->get('text'); 
-        
         $categoryId[]= $request->get('categoryId');;
 
         $article = new Article();
@@ -101,6 +130,29 @@ class HomeController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+    /**
+     * @Route("/post_commentaire/{id}", name="post_commentaire")
+     */
+    public function post_commentaire(Request $request, EntityManagerInterface $entityManager)
+    {
+        $user = $entityManager->find(User::class, $this->getUser());
+        $article = $entityManager->getRepository(Article::class);
+        $text = $request->get('text'); 
+
+
+        $comment = new Comment();
+                $comment->setContent($text);
+                $comment->setCreatedAt(new \DateTime('now'));
+                $comment->setCreatedOn($user);
+                $comment->setFiche($article);
+                
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
             $entityManager->flush();
 
             return $this->redirectToRoute('home');
