@@ -6,6 +6,14 @@
 <p>Prenom : {{ app.user.firstname }}</p>
 <p>Nom : {{ app.user.lastname }}</p>
 <p>Password : ********</p><a href="#">Changer le mot de passe</a><br>
+<a href="#">Changer le Nom et Prenom</a><br>
+
+
+<form action="{{ path('change_name')}}" method="post">
+    <label>Nom : <input type="text" name="lastname" required></label><br>
+    <label>Prenom : <input type="text" name="firstname" required></label><br>
+    <button type="submit" class="btn btn-primary">Modifier</button>
+</form>
 
 <form action="{{ path('change_user_password')}}" method="post">
     <label>Ancien mot de passe : <input type="password" name="old_pw" required></label><br>
@@ -14,4 +22,22 @@
     <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 
+<div>
+    {% for article in article %}
+
+
+    {{ article.id }}<br>
+    {{ article.title }}<br>
+    {{ article.createdon.firstname }}<br>
+    {{ article.createdon.lastname }}<br>
+    {{ article.createdat|date() }}<br>
+    {{ article.content }}<br>
+
+    <img src=/{{ article.picture }}><br>
+
+
+    {% endfor %}
+</div>
+
 {% endblock %}
+
