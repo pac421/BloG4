@@ -1,45 +1,121 @@
-{% extends 'base.html.twig' %}
+{% extends 'navbar.html.twig' %}
 
-{% block body %}
+{% block content %}
 
-<p>Email : {{ app.user.email }}</p>
-<p>Prenom : {{ app.user.firstname }}</p>
-<p>Nom : {{ app.user.lastname }}</p>
-<p>Password : ********</p><a href="#">Changer le mot de passe</a><br>
-<a href="#">Changer le Nom et Prenom</a><br>
+    <div class="row p-5" style="height: 95%">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ path('change_name')}}" method="post">
+                        <div class="d-flex justify-content-between">
+                            <div class="md-form mt-0">
+                                <input type="text" class="form-control" value="{{ app.user.firstname }}" id="input-profil-firstname" name="firstname" required>
+                                <label for="input-profil-firstname">Prénom</label>
+                            </div>
 
+                            <div class="md-form mt-0">
+                                <input type="text" class="form-control" value="{{ app.user.lastname }}" id="input-profil-lastname" name="lastname" required>
+                                <label for="input-profil-lastname">Nom</label>
+                            </div>
 
-<form action="{{ path('change_name')}}" method="post">
+                            <button type="submit" class="btn btn-sm btn-primary" style="width: 95px; height: 34px; padding: 0px 10px;">Modifier</button>
+                        </div>
+                    </form>
+                    <p class="card-text">Email : {{ app.user.email }}</p>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <div class="card-body">
+                    <div class="w-100 text-center">
+                        <h5 class="card-title"><a>Changer mon mot de passe</a></h5>
+                    </div>
 
-    <label>Nom : <input type="text" name="lastname" required></label><br>
-    <label>Prenom : <input type="text" name="firstname" required></label><br>
-    <button type="submit" class="btn btn-primary">Modifier</button>
-</form>
+                    <form>
+                        <div class="md-form form-group mt-5">
+                            <i class="fas fa-clock fa-xs prefix"></i>
+                            <input type="password" class="form-control form-control-sm" id="input-profil-pw-ancien" />
+                            <label for="input-profil-pw-ancien">Ancien mot de passe</label>
+                        </div>
+                        <div class="md-form form-group">
+                            <i class="fas fa-lock fa-xs prefix"></i>
+                            <input type="password" class="form-control form-control-sm" id="input-profil-pw-nouveau" />
+                            <label for="input-profil-pw-nouveau">Nouveau mot de passe</label>
+                        </div>
+                        <div class="md-form form-group">
+                            <i class="fas fa-lock fa-xs prefix"></i>
+                            <input type="password" class="form-control form-control-sm" id="input-profil-pw-confirmation" />
+                            <label for="input-profil-pw-confirmation">Confirmation du nouveau mot de passe</label>
+                        </div>
+                    </form>
+                    <a href="#" class="btn btn-primary btn-sm float-right">Valider</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 pl-5">
+            <h2 class="font-weight-bold mb-5"><i class="fa fa-newspaper mr-2"></i>Mes articles<span id="profil_badge_nbr_article" class="badge badge-primary ml-2" style="font-size: 16px;">12 articles</span></h2>
 
-<form action="{{ path('change_user_password')}}" method="post">
-    <label>Ancien mot de passe : <input type="password" name="old_pw" required></label><br>
-    <label>Nouveau mot de passe : <input type="password" name="new_pw" required></label><br>
-    <label>Confirmer le mot de passe : <input type="password" name="cnew_pw" required></label><br>
-    <button type="submit" class="btn btn-primary">Modifier</button>
-</form>
+            <div class="row">
+                <div class="col-lg-5 col-xl-4">
+                    <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+                        <img class="img-fluid" src="[article_picture]" alt="Image">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-xl-8">
+                    <a href="#!" class="primary-text">
+                        <h6 class="h6 pb-1">
+                            [article_categories]
+                        </h6>
+                    </a>
+                    <h4 class="font-weight-bold mb-3"><strong>[article_title]</strong></h4>
+                    <p class="dark-grey-text">[article_content]</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class='fa fa-user mr-2'></i><a class="font-weight-bold">[article_name]</a><br>
+                            <i class='fa fa-calendar mr-2'></i>[article_date]
+                        </div>
+                        <div>
+                            <a href="edit?id=[article_id]" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
+                            <a href="delete?id=[article_id]" title="Supprimer" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
+                        </div>
+                    </div>
 
-<div>
-    {% for article in article %}
+                    <section class="mt-5">
+                        <div class="accordion md-accordion" id="div_accordion_[article_id]" role="tablist" aria-multiselectable="true">
+                            <div class="card border-0 grey lighten-4">
 
+                                <div class="card-header" role="tab" id="div_accordion_heading_[article_id]">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#div_accordion_[article_id]" href="#div_accordion_collapse_[article_id]" aria-expanded="false" aria-controls="div_accordion_collapse_[article_id]">
+                                        <h5 class="mb-0">
+                                            [comments_number] commentaires <i class="fas fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                </div>
 
-    {{ article.id }}<br>
-    {{ article.createdon.id }}<br>
-    {{ article.title }}<br>
-    {{ article.createdon.firstname }}<br>
-    {{ article.createdon.lastname }}<br>
-    {{ article.createdat|date() }}<br>
-    {{ article.content }}<br>
+                                <div id="div_accordion_collapse_[article_id]" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading_[article_id]" data-parent="#div_accordion_[article_id]">
+                                    <div class="card-body py-0">
 
-    <img src=/{{ article.picture }}><br>
+                                        [article_comments]
 
+                                        <div class="form-group mt-4">
+                                            <label for="textarea_comment_add">Écrire un commentaire</label>
+                                            <textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
 
-    {% endfor %}
-</div>
+                                            <div class="text-right my-1">
+                                                <button class="btn btn-primary btn-sm">Publier</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <hr class="my-5">
+        </div>
+    </div>
 
 {% endblock %}
-
