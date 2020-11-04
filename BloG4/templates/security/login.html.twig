@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion/Inscription{% endblock %}
-
 {% block body %}
 
 <div class="bg"></div>
@@ -101,47 +99,5 @@
 		</div>
 	</div>
 </div>
-
-<!-- 
-<form method="post">
-    {% if error %}
-    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    {% if app.user %}
-    <div class="mb-3">
-        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-    </div>
-    {% endif %}
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required
-        autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-    
-	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    <button class="btn btn-lg btn-primary" type="submit">
-        Connexion
-    </button>
-</form>
-<form method="post" action="{{ path('subscribe')}}">
-    <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-    <label for="inputCPassword">Confirmer le mot de passe</label>
-    <input type="password" name="password" id="inputCPassword" class="form-control" required>
-    <label for="inputFirstName">Nom</label>
-    <input type="text" name="firstname" id="inputFirstName" class="form-control" required>
-    <label for="inputLastName">Prenom</label>
-    <input type="text" name="lastname" id="inputLastName" class="form-control" required>
-    <label for="inputDate">Date de naissance</label>
-    <input type="date" name="bornDate" id="inputDate" class="form-control" required>
-    <button class="btn btn-lg btn-primary" type="submit">
-        Inscritpion
-    </button>
-</form>
- -->
  
 {% endblock %}

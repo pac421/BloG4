@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        <!-- FontAwesome -->
-		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/fontawesome/css/all.css') }}">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" type="image/x-icon" href="{{ asset('pictures/favicon.ico') }}" />
+		<title>{% block title %}BloG4{% endblock %}</title>
+
+		{% block stylesheets %}
+		<!-- FontAwesome -->
+		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/fontawesome/css/all.css') }}" />
 		<!-- MDBootstrap -->
-		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/mdbootstrap/css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/mdbootstrap/css/mdb.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/mdbootstrap/css/style.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/mdbootstrap/css/bootstrap.min.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/mdbootstrap/css/mdb.min.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('libraries/mdbootstrap/css/style.css') }}" />
 		<!-- Custom CSS -->
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}" />
+		<!-- TinyMCE JS -->
+		<script type="text/javascript" src="{{ asset('libraries/tinymce/tinymce.min.js') }}"></script>
 		{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        
-        {% block javascripts %}
-        <!-- jQuery -->
+	</head>
+	<body>
+		{% block body %}
+			{% block navbar %}{% endblock %}
+		{% endblock %}
+
+		{% block javascripts %}
+		<!-- jQuery -->
 		<script type="text/javascript" src="{{ asset('libraries/jquery/jquery.min.js') }}"></script>
-        <!-- MomentJS -->
+		<!-- Moment -->
 		<script type="text/javascript" src="{{ asset('libraries/moment/moment.js') }}"></script>
-		<!-- TinyMCE -->
-		<script type="text/javascript" src="{{ asset('libraries/tinymce/tinymce.min.js') }}"></script>		
 		<!-- MDBootstrap -->
 		<script type="text/javascript" src="{{ asset('libraries/mdbootstrap/js/jquery.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('libraries/mdbootstrap/js/popper.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('libraries/mdbootstrap/js/bootstrap.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('libraries/mdbootstrap/js/mdb.min.js') }}"></script>
+		<!-- DropZone -->
+		<script type="text/javascript" src="{{ asset('libraries/dropzone/min/dropzone.min.js') }}"></script>
 		<!-- Custom JS -->
 		<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 		{% if app.request.get('_route') == 'home' %}
 		<script type="text/javascript" src="{{ asset('js/home.js') }}"></script>
+		{% elseif app.request.get('_route') == 'newFiche' %}
+		<script type="text/javascript" src="{{ asset('js/newFiche.js') }}"></script>
 		{% endif %}
-        {% endblock %}
-    </body>
+		{% endblock %}
+	</body>
 </html>

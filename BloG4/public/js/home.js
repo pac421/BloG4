@@ -133,18 +133,16 @@ function display_articles(lst_selected_and_ordered_articles){
 		let comments_html = '';
 		$.each(lst_comments, function(i, comment){
 			console.log(comment);
-			
+
+			let com_id = comment.id;
 			let com_name = comment.name;
 			let com_content = comment.content;
 			let com_created_at = moment(comment.created_at.date).format("DD/MM/YYYY HH:mm:ss");
 			
-			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><span><a class="font-weight-bold mb-0">'+com_name+'</a>, '+com_created_at+'</span><br>'+com_content+'</div></div>';
+			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><div class="d-flex justify-content-between align-items-center"><div><a class="font-weight-bold mb-0">'+com_name+'</a>, '+com_created_at+'</div><div><a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a></div></div>'+com_content+'</div></div>';
 		});
 		
 		let article_html = '';
-		if(i != 0){
-			article_html += '<hr class="my-5">';
-		}
 		article_html += $('#home_exemple_article')[0].innerHTML;
 		
 		article_html = article_html
@@ -161,6 +159,8 @@ function display_articles(lst_selected_and_ordered_articles){
 		
 		$('#home_div_articles').append(article_html);
 	});
+
+	$('#home_badge_nbr_article').html(lst_selected_and_ordered_articles.length+" articles");
 };
 
 $("#home_search").on("change paste keyup", function(){

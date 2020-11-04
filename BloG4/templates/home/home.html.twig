@@ -1,206 +1,143 @@
-{% extends 'base.html.twig' %}
+{% extends 'navbar.html.twig' %}
 
-{% block title %}Fil d'actualités{% endblock %}
+{% block content %}
 
-{% block body %}
+	<div class="h-100" style="padding-bottom: 60px">
 
-<!--
-Array required to display this template:
-data_home
-	user
-		id
-		name
-		lst_roles
-	lst_category
-		id
-		name
-	lst_fiches
-		id
-		title
-		image
-		content
-		nb_comments
-		date
-			sortable
-			visual
-		user
-			id
-			name
-		lst_categories
-			id
-			name
-		lst_comments
-			id
-			content
-			date
-				sortable
-				visual
-			user
-				id
-				name 
--->
+		<div class="row w-100 m-0 h-100">
+			<div class="col-2 border-right border-primary z-depth-1-half position-fixed h-100 pl-0">
 
-<div class="h-100" style="padding-bottom: 60px">
-	<!-- Navbar -->
-	<nav class="mb-0 navbar navbar-expand-lg navbar-dark primary-color sticky-top p-0">
-		<a class="navbar-brand p-0"><img src="{{ asset('pictures/logo.png') }}" height='50px' class="my-1 ml-2"></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar_collapse" aria-controls="div_navbar_collapse" aria-expanded="false" aria-label="Ouvrir/fermer">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse mr-2" id="div_navbar_collapse">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" id="a_navbar_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user"></i> {{ data_home.user.name }}
-					</a>
-					<div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="a_navbar_dropdown">
-						<a class="dropdown-item" href="{{ path('profil', {'id':app.user.id('id')}) }}">Mon profil</a>
-						<a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<!-- /Navbar -->
-	
-	<div class="row w-100 m-0 h-100">
-		<div class="col-2 border-right border-primary z-depth-1-half position-fixed h-100 pl-0">
-			
-			<!-- Search -->
-			<form class="form-inline d-flex justify-content-center md-form form-sm mt-3 ml-2">
-				<i class="fas fa-search" aria-hidden="true"></i>
-				<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher un mot-clé" aria-label="Recherche" id='home_search'>
-			</form>
-			<!-- /Search -->
-			
-			<!-- Categories -->
-			<div class='input-group flex-column'>
-				<div class='ml-3 border-bottom border-grey mb-3'>
-					<h5>
-						Catégories
-						<span class='float-right'>
-							<a id="home_check_all_categories" title="Cocher toutes les catégories">
-								<i class='far fa-check-square'></i>
-							</a>
-							&nbsp;|&nbsp;
-							<a id="home_uncheck_all_categories" title="Décocher toutes les catégories">
-								<i class='far fa-square'></i>
-							</a>
-						</span>
-					</h5>
-				</div>
-				
-				{% for category in data_home.lst_categories %}
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input home_input_categorie" id="home_input_categorie_{{ category.id }}" onclick='load_articles()' value='{{ category.id }}' checked>
-					<label class="form-check-label" for="home_input_categorie_{{ category.id }}">{{ category.label }}</label>
-				</div>
-				{% endfor %}
-				
-			</div>
-			<!-- /Categories -->
-		</div>
-
-		<div id="div_home_fil_actualite" class="dark-grey-text scrollbar scrollbar-primary w-100">
-			<div class="mr-3 mt-4 mb-5 d-flex justify-content-between align-items-center">
-				<h2 class="font-weight-bold"><i class="fa fa-newspaper mr-2"></i>Fil d'actualités</h2>
-
-				<!-- Material checked -->
-				<div class="switch">
-					<label>
-						Date croissant
-						<input type="checkbox" id='home_order_date' class="primary-color" onclick='load_articles()' checked><span class="lever"></span>
-						Date décroissant
-					</label>
-				</div>
-
-				<form action= "{{path('newFiche')}}" methode= "post">
-				<button class="btn btn-primary"><i class='fa fa-plus-square mr-2'></i>Publier une fiche</button>
+				<!-- Search -->
+				<form class="form-inline d-flex justify-content-center md-form form-sm mt-3 ml-2">
+					<i class="fas fa-search" aria-hidden="true"></i>
+					<input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Rechercher un mot-clé" aria-label="Recherche" id='home_search'>
 				</form>
+				<!-- /Search -->
+
+				<!-- Categories -->
+				<div class='input-group flex-column'>
+					<div class='ml-3 border-bottom border-grey mb-3'>
+						<h5>
+							Catégories
+							<span class='float-right'>
+								<a id="home_check_all_categories" title="Cocher toutes les catégories">
+									<i class='far fa-check-square'></i>
+								</a>
+								&nbsp;|&nbsp;
+								<a id="home_uncheck_all_categories" title="Décocher toutes les catégories">
+									<i class='far fa-square'></i>
+								</a>
+							</span>
+						</h5>
+					</div>
+
+					{% for category in data.lst_categories %}
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input home_input_categorie" id="home_input_categorie_{{ category.id }}" onclick='load_articles()' value='{{ category.id }}' checked>
+						<label class="form-check-label" for="home_input_categorie_{{ category.id }}">{{ category.label }}</label>
+					</div>
+					{% endfor %}
+
+				</div>
+				<!-- /Categories -->
 			</div>
 
-			<div id="home_exemple_article" class="d-none">
+			<div id="div_home_fil_actualite" class="dark-grey-text scrollbar scrollbar-primary w-100 mb-5">
+				<div class="mr-3 mt-4 mb-5 d-flex justify-content-between align-items-center">
+					<h2 class="font-weight-bold"><i class="fa fa-newspaper mr-2"></i>Fil d'actualités<span id="home_badge_nbr_article" class="badge badge-primary ml-2" style="font-size: 16px;"></span></h2>
 
-				<div class="row">
-					<div class="col-lg-5 col-xl-4">
-						<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
-							<img class="img-fluid" src="[article_picture]" alt="Image">
-							<a>
-								<div class="mask rgba-white-slight"></div>
-							</a>
-						</div>
+					<!-- Material checked -->
+					<div class="switch">
+						<label>
+							Date croissant
+							<input type="checkbox" id='home_order_date' class="primary-color" onclick='load_articles()' checked><span class="lever"></span>
+							Date décroissant
+						</label>
 					</div>
-					<div class="col-lg-7 col-xl-8">
-						<a href="#!" class="primary-text">
-							<h6 class="h6 pb-1">
-								[article_categories]
-							</h6>
-						</a>
-						<h4 class="font-weight-bold mb-3"><strong>[article_title]</strong></h4>
-						<p class="dark-grey-text">[article_content]</p>
-						<p>
-							<i class='fa fa-user mr-2'></i><a class="font-weight-bold">[article_name]</a><br>
-							<i class='fa fa-calendar mr-2'></i>[article_date]
-						</p>
 
-						<section class="mt-5">
-							<div class="accordion md-accordion" id="div_accordion_[article_id]" role="tablist" aria-multiselectable="true">
-								<div class="card border-0 grey lighten-4">
+					<form action="{{path('newFiche')}}" methode="post">
+					<button class="btn btn-primary"><i class='fa fa-plus-square mr-2'></i>Publier un article</button>
+					</form>
+				</div>
 
-									<div class="card-header" role="tab" id="div_accordion_heading_[article_id]">
-										<a class="collapsed" data-toggle="collapse" data-parent="#div_accordion_[article_id]" href="#div_accordion_collapse_[article_id]" aria-expanded="false" aria-controls="div_accordion_collapse_[article_id]">
-											<h5 class="mb-0">
-												[comments_number] commentaires <i class="fas fa-angle-down rotate-icon"></i>
-											</h5>
-										</a>
-									</div>
+				<div id="home_exemple_article" class="d-none">
 
-									<div id="div_accordion_collapse_[article_id]" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading_[article_id]" data-parent="#div_accordion_[article_id]">
-										<div class="card-body py-0">
+					<div class="row">
+						<div class="col-lg-5 col-xl-4">
+							<div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+								<img class="img-fluid" src="[article_picture]" alt="Image">
+								<a>
+									<div class="mask rgba-white-slight"></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-7 col-xl-8">
+							<a href="#!" class="primary-text">
+								<h6 class="h6 pb-1">
+									[article_categories]
+								</h6>
+							</a>
+							<h4 class="font-weight-bold mb-3"><strong>[article_title]</strong></h4>
+							<p class="dark-grey-text">[article_content]</p>
+							<div class="d-flex justify-content-between align-items-center">
+								<div>
+									<i class='fa fa-user mr-2'></i><a class="font-weight-bold">[article_name]</a><br>
+									<i class='fa fa-calendar mr-2'></i>[article_date]
+								</div>
+								<div>
+									<a href="edit?id=[article_id]" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
+									<a href="delete?id=[article_id]" title="Supprimer" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
+								</div>
+							</div>
 
-											[article_comments]
+							<section class="mt-5">
+								<div class="accordion md-accordion" id="div_accordion_[article_id]" role="tablist" aria-multiselectable="true">
+									<div class="card border-0 grey lighten-4">
 
-											<div class="form-group mt-4">
-												<label for="textarea_comment_add">Écrire un commentaire</label>
-												<textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
+										<div class="card-header" role="tab" id="div_accordion_heading_[article_id]">
+											<a class="collapsed" data-toggle="collapse" data-parent="#div_accordion_[article_id]" href="#div_accordion_collapse_[article_id]" aria-expanded="false" aria-controls="div_accordion_collapse_[article_id]">
+												<h5 class="mb-0">
+													[comments_number] commentaires <i class="fas fa-angle-down rotate-icon"></i>
+												</h5>
+											</a>
+										</div>
 
-												<div class="text-right my-1">
-													<button class="btn btn-primary btn-sm">Publier</button>
+										<div id="div_accordion_collapse_[article_id]" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading_[article_id]" data-parent="#div_accordion_[article_id]">
+											<div class="card-body py-0">
+
+												[article_comments]
+
+												<div class="form-group mt-4">
+													<label for="textarea_comment_add">Écrire un commentaire</label>
+													<textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
+
+													<div class="text-right my-1">
+														<button class="btn btn-primary btn-sm">Publier</button>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</section>
+							</section>
+						</div>
 					</div>
+					<hr class="my-5">
 				</div>
-			</div>
 
-			<div id='home_div_articles' class='d-flex flex-column mr-4'></div>
+				<div id='home_div_articles' class='d-flex flex-column mr-4'></div>
 
-			<div id="div_scroll_to_top" class="position-fixed invisible" style="bottom: 10px; right: 10px;">
-				<a id="btn_scroll_to_top" class="btn-floating btn-primary">
-					<i class="fas fa-angle-up"></i>
-				</a>
+				<div id="div_scroll_to_top" class="position-fixed invisible" style="bottom: 10px; right: 10px;">
+					<a id="btn_scroll_to_top" class="btn-floating btn-primary">
+						<i class="fas fa-angle-up"></i>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<!-- Footer --
-<footer class="page-footer font-small primary-color position-relative z-depth-1-half">
-	<div class="footer-copyright text-center py-3">© 2020
-		<a href="#"> BloG4</a>
-	</div>
-</footer>
-!-- Footer -->
-
-
-<script type='text/javascript'>
-var data_home = {{ data_home|json_encode|raw }};
-</script>
+	<script type='text/javascript'>
+		var data_home = {{ data|json_encode|raw }};
+	</script>
 
 {% endblock %}
-
-

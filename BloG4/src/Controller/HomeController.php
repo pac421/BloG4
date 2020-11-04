@@ -24,19 +24,19 @@ class HomeController extends AbstractController
      */
     public function home(EntityManagerInterface $entityManager)
     {
-		$data_home = []; // This table will contain all the data required by the home page
+        $data = []; // This table will contain all the data required by the home page
+
+        $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
+        $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
+        $data['lst_articles'] = $entityManager->getRepository(Article::class)->getAllArticles();
 		
-		$data_home['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
-		$data_home['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
-		$data_home['lst_articles'] = $entityManager->getRepository(Article::class)->getAllArticles();
-		
-		for($i = 0; $i < count($data_home['lst_articles']); $i++){
+		for($i = 0; $i < count($data['lst_articles']); $i++){
 			
-			$article_id = $data_home['lst_articles'][$i]['id'];
-			$data_home['lst_articles'][$i]['lst_comments'] = $entityManager->getRepository(Comment::class)->getCommentsByArticleId($article_id);
+			$article_id = $data['lst_articles'][$i]['id'];
+            $data['lst_articles'][$i]['lst_comments'] = $entityManager->getRepository(Comment::class)->getCommentsByArticleId($article_id);
 		}
 		
-        return $this->render('home/home.html.twig', ['data_home' => $data_home]);
+        return $this->render('home/home.html.twig', ['data' => $data]);
     }
 
     /**
@@ -59,10 +59,18 @@ class HomeController extends AbstractController
      */
     public function newFiche(EntityManagerInterface $entityManager)
     {
+        $data = []; // This table will contain all the data required by the newFiche page
 
-        $data_home = []; // This table will contain all the data required by the home page
-		$data_home['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
-        return $this->render('home/newFiche.html.twig', ['data_home' => $data_home]);
+        $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
+        $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
+        $data['lst_articles'] = $entityManager->getRepository(Article::class)->getAllArticles();
+
+        for($i = 0; $i < count($data['lst_articles']); $i++){
+
+            $article_id = $data['lst_articles'][$i]['id'];
+            $data['lst_articles'][$i]['lst_comments'] = $entityManager->getRepository(Comment::class)->getCommentsByArticleId($article_id);
+        }
+        return $this->render('home/newFiche.html.twig', ['data' => $data]);
     }
 
     /**

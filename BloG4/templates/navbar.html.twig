@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+
+    <!-- Navbar -->
+    <nav class="mb-0 navbar navbar-expand-lg navbar-dark primary-color sticky-top p-0">
+        <a class="navbar-brand p-0"><img src="{{ asset('pictures/logo.png') }}" height='50px' class="my-1 ml-2"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar_collapse" aria-controls="div_navbar_collapse" aria-expanded="false" aria-label="Ouvrir/fermer">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-2" id="div_navbar_collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="a_navbar_navbar_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i> {{ data.user.name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="a_navbar_navbar_dropdown">
+                        <a class="dropdown-item" href="{{ path('profil', {'id':app.user.id('id')}) }}">Mon profil</a>
+                        <a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /Navbar -->
+
+    {% block content %}{% endblock %}
+
+{% endblock %}

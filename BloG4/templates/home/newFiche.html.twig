@@ -1,27 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'navbar.html.twig' %}
 
-{% block body %}
+{% block content %}
 
-<form action="{{ path('postFiche', {'id':app.user.id('id')}) }}" methode="post">
-    <label for="inputTitle">Titre</label>
-    <input type="text" name="title" id="inputTitle" class="form-control" required>
+    <form action="{{ path('postFiche', {'id':app.user.id('id')}) }}" methode="post" class="h-100">
+        <div class="row p-5" style="height: 95%">
+            <div class="col-5">
+                <div class="md-form form-lg w-100 m-0">
+                    <input type="text" id="input-newFiche-title" class="form-control form-control-lg" name="title" required>
+                    <label for="input-newFiche-title">Titre de l'article</label>
+                </div>
+                <div id="picture_upload" class="w-100 mt-5 grey lighten-4 text-center align-center" style="height: 300px; line-height: 300px; font-size: 20px;">
+                    <span id="default_picture_upload_message">Glissez-déposez ou cliquez ici pour télécharger l'image</span>
+                </div>
+                <a id="btn_picture_upload_suppr" class="text-danger float-right invisible"><i class='fa fa-times mr-2'></i>Retirer l'image</a>
+                <div class="mt-5">
+                    <div class='border-bottom border-grey mb-3'>
+                        <h6>Catégories de l'article</h6>
+                    </div>
 
-    <label for="inputText">Texte</label>
-    <input type="text" name="text" id="inputText" class="form-control" required>
+                    {% for category in data.lst_categories %}
+                        <div class="form-check form-check-inline mr-5 mb-3">
+                            <input type="checkbox" class="form-check-input" id="checkbox-newFiche-category-{{ category.id }}" value='{{ category.id }}' name="categoryId">
+                            <label class="form-check-label pl-4" for="checkbox-newFiche-category-{{ category.id }}" style="width: 45px;">{{ category.label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-7">
+                <textarea id="tinymce" name="text" required></textarea>
+                <div class="float-right mt-3">
+                    <button class="btn btn-light"><i class='fa fa-reply mr-2'></i>Annuler</button>
+                    <button class="btn btn-primary mr-0" type="submit"><i class='fa fa-plus-square mr-2'></i>Publier mon article</button>
+                </div>
+            </div>
+        </div>
+    </form>
 
-    <input type="file" name="images" id="fileToUpload"><br>
-
-    {% for category in data_home.lst_categories %}
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input home_input_categorie" id="home_input_categorie_{{ category.id }}"
-            onclick='load_articles()' value='{{ category.id }}' name="categoryId" checked>
-        <label class="form-check-label" for="home_input_categorie_{{ category.id }}">{{ category.label }}</label>
-    </div>
-    {% endfor %}
-
-    <button type="submit" class="btn btn-primary">Ajouter</button>
-
-
-
-</form>
 {% endblock %}
