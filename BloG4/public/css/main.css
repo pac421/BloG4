@@ -14,6 +14,10 @@ body, html{
 #div_home_fil_actualite{
 	margin-left: 19%;
 }
+#div_profil_fil_actualite{
+	margin-left: 27%;
+}
+
 .switch label input[type=checkbox]:checked+.lever:after{
 	background-color: #4285f4;
 }

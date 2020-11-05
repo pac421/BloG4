@@ -5,6 +5,7 @@
     <form action="{{ path('postFiche', {'id':app.user.id('id')}) }}" methode="post" class="h-100">
         <div class="row p-5" style="height: 95%">
             <div class="col-5">
+                <h4 class="dark-grey-text font-weight-bold mb-5"><i class="fa fa-feather-alt mr-2"></i>Rédaction d'un nouvel article</h4>
                 <div class="md-form form-lg w-100 m-0">
                     <input type="text" id="input-newFiche-title" class="form-control form-control-lg" name="title" required>
                     <label for="input-newFiche-title">Titre de l'article</label>
@@ -29,7 +30,7 @@
             <div class="col-7">
                 <textarea id="tinymce" name="text"></textarea>
                 <div class="float-right mt-3">
-                    <button class="btn btn-light"><i class='fa fa-reply mr-2'></i>Annuler</button>
+                    <a class="btn btn-light" href="{{path('home')}}"><i class='fa fa-reply mr-2'></i>Annuler</a>
                     <button class="btn btn-primary mr-0" type="submit"><i class='fa fa-plus-square mr-2'></i>Publier mon article</button>
                 </div>
             </div>

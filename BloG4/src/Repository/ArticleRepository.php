@@ -42,27 +42,18 @@ class ArticleRepository extends ServiceEntityRepository
         return $result;
     }
 
-    /*
-    public function findByExampleField($value)
+    public function getArticlesByUserId($id): array
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+        $entityManager = $this->getEntityManager();
 
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $result = $entityManager->createQuery(
+            '
+            SELECT A.id, A.created_at, A.title, A.picture, A.content, A.lst_categories
+            FROM App\Entity\Article A
+            WHERE A.deleted_at IS NULL AND A.created_on = :id
+            '
+        )->setParameter('id', $id)->getArrayResult();
+
+        return $result;
     }
-    */
 }

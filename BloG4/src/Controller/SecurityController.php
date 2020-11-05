@@ -113,7 +113,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/change_name", name="change_name")
      */
-    public function change_name (EntityManagerInterface $entityManager, Request $request) 
+    public function change_name (EntityManagerInterface $entityManager, Request $request)
     {
         $user = $entityManager->find(User::class, $this->getUser());
         $firstname = $request->get('firstname'); 
