@@ -6,7 +6,7 @@
         <div class="col-3 position-fixed h-100">
             <div class="card mt-5">
                 <div class="card-body">
-                    <form action="{{ path('change_name')}}" method="post">
+                    <form action="{{ path('change_name', {'id':app.user.id('id')})}}" method="post">
                         <div class="d-flex justify-content-between">
                             <div class="md-form mt-0">
                                 <input type="text" class="form-control" value="{{ app.user.firstname }}" id="input-profil-firstname" name="firstname" required>
@@ -72,12 +72,12 @@
                     <div class="col-lg-7 col-xl-8">
                         <a href="#" class="primary-text">
                             <h6 class="h6 pb-1">
-
+{# 
                                 {% for category_label in article.lst_categories_label %}
 
                                     <span class="badge badge-primary mr-1">{{ category_label }}</span>
 
-                                {% endfor %}
+                                {% endfor %} #}
 
                             </h6>
                         </a>
