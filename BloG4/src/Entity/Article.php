@@ -116,13 +116,8 @@ class Article
 
     public function setLstCategories(array $lst_categories): self
     {
-
-
-     $this->lst_categories[] = $lst_categories;
-        
-
+        $this->lst_categories = $lst_categories;
         return $this;
-
     }
 
     public function getCreatedOn(): ?User

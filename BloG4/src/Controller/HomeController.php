@@ -89,8 +89,16 @@ class HomeController extends AbstractController
         $user = $entityManager->find(User::class, $this->getUser());
         $title = $request->get('title'); 
         $text = $request->get('text');
-        
-        $categoryId[]= $request->get('categoryId');
+
+        $lst_categories = $entityManager->getRepository(Category::class)->getAllCategories();
+
+        $categoryId = [];
+        foreach($lst_categories as $cat){
+            $state = $request->get('categoryId-'.$cat['id']);
+            if($state != null){
+                $categoryId[] = intval($state);
+            }
+        }
 
         if($id != 0){
             $article = $entityManager->getRepository(Article::class)->find($id);
@@ -106,10 +114,7 @@ class HomeController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
 
-        }
-
-        else
-        {
+        }else{
             $article = new Article();
             $article->setTitle($title);
             $article->setContent($text);

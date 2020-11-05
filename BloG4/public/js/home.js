@@ -8,7 +8,6 @@
  */
 
 $(document).ready(function(){
-	console.log('data_home : ', data_home);
 	load_articles();
 });
 
@@ -20,7 +19,6 @@ function load_articles(){
 }
 
 function get_selected_categories(){
-	console.log('fct get_selected_categories start');
 	
 	let lst_selected_categories = [];
 	
@@ -36,7 +34,6 @@ function get_selected_categories(){
 };
 
 function get_selected_date_order(){
-	console.log('fct get_selected_date_order start');
 	
 	let element_date_order = $('#home_order_date')[0];
 	let selected_date_order = element_date_order.checked;
@@ -45,7 +42,6 @@ function get_selected_date_order(){
 };
 
 function get_searched_str(){
-	console.log('fct get_searched_str start');
 	
 	let element_search = $('#home_search')[0];
 	let searched_str = element_search.value;
@@ -54,7 +50,6 @@ function get_searched_str(){
 }
 
 function select_and_order_articles(lst_selected_categories, selected_date_order, searched_str){
-	console.log('fct select_articles start');
 	
 	let lst_articles = data_home.lst_articles;
 	
@@ -102,7 +97,6 @@ function select_and_order_articles(lst_selected_categories, selected_date_order,
 };
 
 function display_articles(lst_selected_and_ordered_articles){
-	console.log('fct display_articles start');
 	
 	$('#home_div_articles').empty();
 
@@ -166,19 +160,16 @@ $("#home_search").on("change paste keyup", function(){
 });
  
 $('#home_check_all_categories').click(function() {
-    console.log('evt home_check_all_categories click start');
     $('.home_input_categorie').prop('checked', true);
     load_articles();
 });
 
 $('#home_uncheck_all_categories').click(function() {
-    console.log('evt home_uncheck_all_categories click start');
     $('.home_input_categorie').prop('checked', false);
     load_articles();
 });
 
 $('#btn_scroll_to_top').click(function() {
-	console.log('evt btn_scroll_to_top click start');
 	$('#div_home_fil_actualite').animate({ scrollTop: 0 }, 500);
 });
 
@@ -193,10 +184,8 @@ $("#div_home_fil_actualite").scroll(function() {
 });
 
 function btn_delete_click(el) {
-	console.log('evt btn_delete click start');
 
 	let action_val = $(el).attr('action');
-	console.log('action_val : ', action_val);
 
 	$('#modal_confirm_delete_btn').attr("href", action_val);
 }

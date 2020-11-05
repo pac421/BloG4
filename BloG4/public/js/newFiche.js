@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    console.log('article_content : ', article_content);
-    console.log('article_lst_categories : ', article_lst_categories);
 
     if(article_lst_categories.length > 0){
         $.each(article_lst_categories, function(i, v){
@@ -44,7 +42,6 @@ var dz = $("div#picture_upload").dropzone({
 });
 
 $('#btn_picture_upload_suppr').click(function(){
-    console.log('evt btn_picture_upload_suppr click start');
 
     dz[0].dropzone.removeAllFiles(true);
     $('#btn_picture_upload_suppr').addClass('invisible');

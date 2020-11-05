@@ -33,7 +33,7 @@
 
                     {% for category in data.lst_categories %}
                         <div class="form-check form-check-inline mr-5 mb-3">
-                            <input type="checkbox" class="form-check-input" id="checkbox-newFiche-category-{{ category.id }}" value='{{ category.id }}' name="categoryId">
+                            <input type="checkbox" class="form-check-input" id="checkbox-newFiche-category-{{ category.id }}" value='{{ category.id }}' name="categoryId-{{ category.id }}">
                             <label class="form-check-label pl-4" for="checkbox-newFiche-category-{{ category.id }}" style="width: 45px;">{{ category.label }}</label>
                         </div>
                     {% endfor %}

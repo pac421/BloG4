@@ -25,13 +25,13 @@
 
                     {% else %}
 
-                        <p class="card-text">Prénom : {{ data.user.firstname }}</p>
-                        <p class="card-text">Nom : {{ data.user.lastName }}</p>
+                        <p class="card-text"><b>Prénom :</b> {{ data.user.firstname }}</p>
+                        <p class="card-text"><b>Nom :</b> {{ data.user.lastName }}</p>
 
                     {% endif %}
 
-                    <p class="card-text">Email : {{ data.user.email }}</p>
-                    <p class="card-text">Anniversaire : {{ data.user.bornDate|date("d/m") }}</p>
+                    <p class="card-text"><b>Email :</b> {{ data.user.email }}</p>
+                    <p class="card-text"><b>Anniversaire :</b> {{ data.user.bornDate|date("d/m") }}</p>
                 </div>
             </div>
 
