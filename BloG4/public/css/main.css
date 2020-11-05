@@ -22,11 +22,12 @@ body, html{
 	background-color: #4285f4;
 }
 .bg{
-	background-image: url("../pictures/bg_connexion.png");
+	background-image: url("../pictures/bg_connexion.jpg");
 	height: 100%;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	filter: blur(15px);
 }
 .center-div{
 	position: absolute;

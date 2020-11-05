@@ -2,16 +2,17 @@
 
 {% block content %}
 
-    <form action="{{ path('postFiche', {'id':app.user.id('id')}) }}" methode="post" class="h-100">
+
+    <form action="{{ path('postFiche', {'id':app.request.get('id')}) }}" methode="post" class="h-100">
         <div class="row p-5" style="height: 95%">
             <div class="col-5">
                 <h4 class="dark-grey-text font-weight-bold mb-5"><i class="fa fa-feather-alt mr-2"></i>Rédaction d'un nouvel article</h4>
                 <div class="md-form form-lg w-100 m-0">
-                    <input type="text" id="input-newFiche-title" class="form-control form-control-lg" name="title" required>
+                    <input type="text" id="input-newFiche-title" class="form-control form-control-lg" {% if article.title is defined %} value= {{article.title}} {% endif %} name="title" required>
                     <label for="input-newFiche-title">Titre de l'article</label>
                 </div>
                 <div id="picture_upload" class="w-100 mt-5 grey lighten-4 text-center align-center" style="height: 300px; line-height: 300px; font-size: 20px;">
-                    <span id="default_picture_upload_message">Glissez-déposez ou cliquez ici pour télécharger l'image</span>
+                    <span id="default_picture_upload_message">{% if article.picture is defined %}<img style="height: 300px; line-height: 300px; font-size: 20px;" src=/{{ article.picture }}>{% endif %}</span>
                 </div>
                 <a id="btn_picture_upload_suppr" class="text-danger float-right invisible"><i class='fa fa-times mr-2'></i>Retirer l'image</a>
                 <div class="mt-5">
@@ -28,7 +29,7 @@
                 </div>
             </div>
             <div class="col-7">
-                <textarea id="tinymce" name="text"></textarea>
+                <textarea id="tinymce" name="text">{% if article.content is defined %}{{article.content}} {% endif %}</textarea>
                 <div class="float-right mt-3">
                     <a class="btn btn-light" href="{{path('home')}}"><i class='fa fa-reply mr-2'></i>Annuler</a>
                     <button class="btn btn-primary mr-0" type="submit"><i class='fa fa-plus-square mr-2'></i>Publier mon article</button>
@@ -36,5 +37,6 @@
             </div>
         </div>
     </form>
+
 
 {% endblock %}

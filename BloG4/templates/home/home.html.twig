@@ -56,7 +56,7 @@
 						</label>
 					</div>
 
-					<form action="{{path('newFiche')}}" methode="post">
+					<form action="{{ path('newFiche', {'id': 0 })}}" methode="post">
 					<button class="btn btn-primary"><i class='fa fa-plus-square mr-2'></i>Publier un article</button>
 					</form>
 				</div>
@@ -90,8 +90,8 @@
 								{% if "ROLE_ADMIN" in app.user.roles %}
 
 									<div>
-										<a href="edit?id=[article_id]" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
-										<a href="delete?id=[article_id]" title="Supprimer" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
+										<a href="/editFiche/[article_id]" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
+										<a action="/deleteFiche/[article_id]" title="Supprimer" class="text-dark" onclick="btn_delete_click(this)" data-toggle="modal" data-target="#modalConfirmDelete"><i class="fa fa-trash-alt fa-sm"></i></a>
 									</div>
 
 								{% endif %}
@@ -118,7 +118,7 @@
 
 													<div class="form-group mt-4">
 														<label for="textarea_comment_add">Écrire un commentaire</label>
-														<textarea class="form-control" name="text" id="textarea_comment_add" rows="3"></textarea>
+														<textarea class="form-control textarea_comment_add" name="text" rows="3"></textarea>
 
 														<div class="text-right my-1">
 															<button type="submit" class="btn btn-primary btn-sm">Publier</button>
@@ -137,11 +137,6 @@
 
 				<div id='home_div_articles' class='d-flex flex-column mr-4'></div>
 
-				<div id="div_scroll_to_top" class="position-fixed invisible" style="bottom: 10px; right: 10px;">
-					<a id="btn_scroll_to_top" class="btn-floating btn-primary">
-						<i class="fas fa-angle-up"></i>
-					</a>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -149,6 +144,31 @@
 	<script type='text/javascript'>
 		var data_home = {{ data|json_encode|raw }};
 	</script>
-</div>
+
+	<!--Modal: modalConfirmDelete-->
+	<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete"
+		 aria-hidden="true">
+		<div class="modal-dialog modal-notify modal-danger" role="document">
+			<div class="modal-content text-center">
+				<div class="modal-header d-flex justify-content-center">
+					<p class="heading">Êtes-vous sûr de vouloir continuer ?<br>Cet élément sera supprimé définitivement.</p>
+				</div>
+				<div class="modal-body">
+					<i class="fas fa-times fa-4x animated rotateIn"></i>
+				</div>
+				<div class="modal-footer flex-center">
+					<a id="modal_confirm_delete_btn" href="#" class="btn  btn-outline-danger">Oui</a>
+					<a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Non</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Modal: modalConfirmDelete-->
+
+	<div id="div_scroll_to_top" class="position-fixed invisible" style="bottom: 10px; right: 10px; z-index: 9999999;">
+		<a id="btn_scroll_to_top" class="btn-floating btn-primary">
+			<i class="fas fa-angle-up"></i>
+		</a>
+	</div>
 
 {% endblock %}

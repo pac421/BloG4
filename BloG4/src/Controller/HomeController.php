@@ -65,22 +65,24 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/newFiche", name="newFiche")
+     * @Route("/newFiche/{id}", name="newFiche")
      */
-    public function newFiche(EntityManagerInterface $entityManager)
+    public function newFiche(EntityManagerInterface $entityManager, $id)
     {
         $data = []; // This table will contain all the data required by the newFiche page
-
+        $article = $entityManager->getRepository(Article::class)->find($id);
         $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
         $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
 
-        return $this->render('home/newFiche.html.twig', ['data' => $data]);
+        return $this->render('home/newFiche.html.twig', ['data' => $data,
+        'article' => $article
+        ]);
     }
 
     /**
      * @Route("/postFiche/{id}", name="postFiche")
      */
-    public function postFiche(Request $request, EntityManagerInterface $entityManager)
+    public function postFiche(Request $request, EntityManagerInterface $entityManager, $id)
     {
 
         $user = $entityManager->find(User::class, $this->getUser());
@@ -89,8 +91,24 @@ class HomeController extends AbstractController
         
         $categoryId[]= $request->get('categoryId');
 
-        if(isset($user)){
+        if($id != 0){
+            $article = $entityManager->getRepository(Article::class)->find($id);
+            
+            $article->setTitle($title);
+            $article->setContent($text);
+            $article->setPicture("pictures/article/test.jpg");
+            $article->setCreatedAt(new \DateTime('now'));
+            $article->setLstCategories($categoryId);
+            $article->setCreatedOn($user);
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+        }
+
+        else
+        {
             $article = new Article();
             $article->setTitle($title);
             $article->setContent($text);
@@ -102,35 +120,29 @@ class HomeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
-        }
 
+        }
         return $this->redirectToRoute('home');
     }
 
     /**
      * @Route("/editFiche/{id}", name="editFiche")
      */
-    public function editFiche(Request $request, EntityManagerInterface $entityManager)
+    public function editFiche(Request $request, EntityManagerInterface $entityManager, $id)
     {
 
-        $user = $entityManager->find(User::class, $this->getUser());
-        $title = $request->get('title'); 
-        $text = $request->get('text'); 
-        $categoryId[]= $request->get('categoryId');;
+        $article = $entityManager->getRepository(Article::class)->find($id);
 
-        $article = new Article();
-        $article->setTitle($title);
-        $article->setContent($text);
-        $article->setPicture("public/pictures/article/test.jpg");
-        $article->setCreatedAt(new \DateTime('now'));
-        $article->setLstCategories($categoryId);
-        $article->setCreatedOn($user);
+        $data = []; // This table will contain all the data required by the newFiche page
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($article);
-        $entityManager->flush();
+        $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
+        $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
 
-        return $this->redirectToRoute('home');
+        return $this->render('home/newFiche.html.twig', [
+            'article' => $article,
+        'data' => $data 
+        ]);
+
     }
 
     /**
@@ -147,6 +159,44 @@ class HomeController extends AbstractController
         $comment->setCreatedAt(new \DateTime('now'));
         $comment->setCreatedOn($user);
         $comment->setFiche($article);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/deleteFiche/{id}", name="deleteFiche")
+     */
+    public function deleteFiche(Request $request, EntityManagerInterface $entityManager, int $id)
+    {
+        $user = $entityManager->find(User::class, $this->getUser());
+
+        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $article->setDeletedOn($user);
+        $article->setDeletedAt(new \DateTime('now'));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($article);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/deleteComment/{id}", name="deleteComment")
+     */
+    public function deleteComment(Request $request, EntityManagerInterface $entityManager, int $id)
+    {
+        $user = $entityManager->find(User::class, $this->getUser());
+
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+
+        $comment->setDeletedOn($user);
+        $comment->setDeletedAt(new \DateTime('now'));
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($comment);

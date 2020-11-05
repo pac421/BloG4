@@ -19,7 +19,7 @@
                                     <input type="text" class="form-control" value="{{ data.user.lastName }}" id="input-profil-lastname" name="lastname" required>
                                     <label for="input-profil-lastname">Nom</label>
                                 </div>
-                                <button type="submit" class="btn btn-sm btn-primary" style="width: 95px; height: 34px; padding: 0px 10px;">Modifier</button>
+                                <button type="submit" class="btn btn-sm btn-primary" style="width: 100px; height: 34px; padding: 0px 10px;">Modifier</button>
                             </div>
                         </form>
 
@@ -79,7 +79,7 @@
 
                 <span id="profil_badge_nbr_article" class="badge badge-primary ml-2" style="font-size: 16px;">{{ data.lst_articles|length }} articles</span></h2>
 
-                <a class="btn btn-light mr-5" href="{{path('home')}}"><i class='fa fa-reply mr-2'></i>Retour au fil d'actualités</a>
+                <a class="btn btn-sm btn-light mr-5" href="{{path('home')}}"><i class='fa fa-reply mr-2'></i>Retour au fil d'actualités</a>
             </div>
 
             {% for article in data.lst_articles %}
@@ -114,8 +114,8 @@
                                 <i class='fa fa-calendar mr-2'></i>{{ article.created_at|date("d/m/Y H:i") }}
                             </div>
                             <div>
-                                <a href="edit?id={{ article.id }}" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
-                                <a href="delete?id={{ article.id }}" title="Supprimer" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
+                                <a href="/editFiche/{{ article.id }}" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
+                                <a action="/deleteFiche/{{ article.id }}" title="Supprimer" class="text-dark" onclick="btn_delete_click(this)" data-toggle="modal" data-target="#modalConfirmDelete"><i class="fa fa-trash-alt fa-sm"></i></a>
                             </div>
                         </div>
 
@@ -144,7 +144,7 @@
                                                                     <a class="font-weight-bold mb-0 text-dark" href="/profil/{{ comment.created_on }}">{{ comment.name }}</a>, {{ comment.created_at|date("d/m/Y H:i") }}
                                                                 </div>
                                                                 <div>
-                                                                    <a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
+                                                                    <a action="/deleteComment/{{ comment.id }}" title="Supprimer" class="text-dark" onclick="btn_delete_click(this)" data-toggle="modal" data-target="#modalConfirmDelete"><i class="fa fa-trash-alt fa-sm"></i></a>
                                                                 </div>
                                                             </div>
                                                             {{ comment.content }}
@@ -171,18 +171,40 @@
                 </div>
 
                 {% if article != data.lst_articles|last %}
-
                     <hr class="my-5">
-
                 {% elseif article == data.lst_articles|last %}
-
                     <div class="mb-5"></div>
-
                 {% endif %}
 
             {% endfor %}
 
         </div>
+    </div>
+
+    <!--Modal: modalConfirmDelete-->
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete"
+         aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-danger" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header d-flex justify-content-center">
+                    <p class="heading">Êtes-vous sûr de vouloir continuer ?<br>Cet élément sera supprimé définitivement.</p>
+                </div>
+                <div class="modal-body">
+                    <i class="fas fa-times fa-4x animated rotateIn"></i>
+                </div>
+                <div class="modal-footer flex-center">
+                    <a id="modal_confirm_delete_btn" href="#" class="btn  btn-outline-danger">Oui</a>
+                    <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Non</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal: modalConfirmDelete-->
+
+    <div id="div_scroll_to_top" class="position-fixed invisible" style="bottom: 10px; right: 10px; z-index: 9999999;">
+        <a id="btn_scroll_to_top" class="btn-floating btn-primary">
+            <i class="fas fa-angle-up"></i>
+        </a>
     </div>
 
 {% endblock %}

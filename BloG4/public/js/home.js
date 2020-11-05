@@ -31,8 +31,7 @@ function get_selected_categories(){
 		
 		lst_selected_categories[value] = checked;
 	});
-	
-	console.log('lst_selected_categories : ', lst_selected_categories);
+
 	return lst_selected_categories;
 };
 
@@ -41,8 +40,7 @@ function get_selected_date_order(){
 	
 	let element_date_order = $('#home_order_date')[0];
 	let selected_date_order = element_date_order.checked;
-	
-	console.log('selected_date_order : ', selected_date_order);
+
 	return selected_date_order;
 };
 
@@ -51,8 +49,7 @@ function get_searched_str(){
 	
 	let element_search = $('#home_search')[0];
 	let searched_str = element_search.value;
-	
-	console.log('searched_str : ', searched_str);
+
 	return searched_str;
 }
 
@@ -100,8 +97,7 @@ function select_and_order_articles(lst_selected_categories, selected_date_order,
 			lst_selected_and_ordered_articles[i].content = lst_selected_and_ordered_articles[i].content.replaceAll(searched_str, '<span class="primary-color white-text">'+searched_str+'</span>');
 		}
 	}
-	
-	console.log('lst_selected_and_ordered_articles : ', lst_selected_and_ordered_articles);
+
 	display_articles(lst_selected_and_ordered_articles);
 };
 
@@ -133,7 +129,6 @@ function display_articles(lst_selected_and_ordered_articles){
 		let nb_comments = lst_comments.length;
 		let comments_html = '';
 		$.each(lst_comments, function(i, comment){
-			console.log(comment);
 
 			let com_id = comment.id;
 			let com_name = comment.name;
@@ -141,7 +136,7 @@ function display_articles(lst_selected_and_ordered_articles){
 			let com_created_at = moment(comment.created_at.date).format("DD/MM/YYYY HH:mm");
 			let com_created_on = comment.created_on;
 			
-			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><div class="d-flex justify-content-between align-items-center"><div><a class="font-weight-bold mb-0 text-dark" href="/profil/'+com_created_on+'">'+com_name+'</a>, '+com_created_at+'</div><div><a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a></div></div>'+com_content+'</div></div>';
+			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><div class="d-flex justify-content-between align-items-center"><div><a class="font-weight-bold mb-0 text-dark" href="/profil/'+com_created_on+'">'+com_name+'</a>, '+com_created_at+'</div><div><a action="/deleteComment/'+com_id+'" title="Supprimer" class="text-dark" onclick="btn_delete_click(this)" data-toggle="modal" data-target="#modalConfirmDelete"><i class="fa fa-trash-alt fa-sm"></i></a></div></div>'+com_content+'</div></div>';
 		});
 		
 		let article_html = '';
@@ -190,11 +185,18 @@ $('#btn_scroll_to_top').click(function() {
 $("#div_home_fil_actualite").scroll(function() {
 	if($(this).scrollTop() > 0) {
 		if($("#div_scroll_to_top").hasClass("invisible")){
-			console.log("show scroll-to-top btn");
 			$('#div_scroll_to_top').removeClass('invisible');
 		}
 	} else {
-		console.log("hide scroll-to-top btn");
 		$('#div_scroll_to_top').addClass('invisible');
 	}
 });
+
+function btn_delete_click(el) {
+	console.log('evt btn_delete click start');
+
+	let action_val = $(el).attr('action');
+	console.log('action_val : ', action_val);
+
+	$('#modal_confirm_delete_btn').attr("href", action_val);
+}
