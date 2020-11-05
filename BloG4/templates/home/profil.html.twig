@@ -119,52 +119,54 @@
                             </div>
                         </div>
 
-                        <section class="mt-5">
-                            <div class="accordion md-accordion" id="div_accordion_{{ article.id }}" role="tablist" aria-multiselectable="true">
-                                <div class="card border-0 grey lighten-4">
+                        <form action="/post_commentaire/{{ article.id }}" method="post">
+                            <section class="mt-5">
+                                <div class="accordion md-accordion" id="div_accordion_{{ article.id }}" role="tablist" aria-multiselectable="true">
+                                    <div class="card border-0 grey lighten-4">
 
-                                    <div class="card-header" role="tab" id="div_accordion_heading_{{ article.id }}">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#div_accordion_{{ article.id }}" href="#div_accordion_collapse_{{ article.id }}" aria-expanded="false" aria-controls="div_accordion_collapse_{{ article.id }}">
-                                            <h5 class="mb-0">
-                                                {{ article.lst_comments|length }} commentaires <i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
+                                        <div class="card-header" role="tab" id="div_accordion_heading_{{ article.id }}">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#div_accordion_{{ article.id }}" href="#div_accordion_collapse_{{ article.id }}" aria-expanded="false" aria-controls="div_accordion_collapse_{{ article.id }}">
+                                                <h5 class="mb-0">
+                                                    {{ article.lst_comments|length }} commentaires <i class="fas fa-angle-down rotate-icon"></i>
+                                                </h5>
+                                            </a>
+                                        </div>
 
-                                    <div id="div_accordion_collapse_{{ article.id }}" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading_{{ article.id }}" data-parent="#div_accordion_{{ article.id }}">
-                                        <div class="card-body py-0">
+                                        <div id="div_accordion_collapse_{{ article.id }}" class="collapse" role="tabpanel" aria-labelledby="div_accordion_heading_{{ article.id }}" data-parent="#div_accordion_{{ article.id }}">
+                                            <div class="card-body py-0">
 
-                                            {% for comment in article.lst_comments %}
+                                                {% for comment in article.lst_comments %}
 
-                                                <div class="media d-block d-md-flex mt-4">
-                                                    <div class="media-body text-center text-md-left md-3 ml-0">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <a class="font-weight-bold mb-0 text-dark" href="/profil/{{ comment.created_on }}">{{ comment.name }}</a>, {{ comment.created_at|date("d/m/Y H:i") }}
+                                                    <div class="media d-block d-md-flex mt-4">
+                                                        <div class="media-body text-center text-md-left md-3 ml-0">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <div>
+                                                                    <a class="font-weight-bold mb-0 text-dark" href="/profil/{{ comment.created_on }}">{{ comment.name }}</a>, {{ comment.created_at|date("d/m/Y H:i") }}
+                                                                </div>
+                                                                <div>
+                                                                    <a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>
-                                                            </div>
+                                                            {{ comment.content }}
                                                         </div>
-                                                        {{ comment.content }}
                                                     </div>
-                                                </div>
 
-                                            {% endfor %}
+                                                {% endfor %}
 
-                                            <div class="form-group mt-4">
-                                                <label for="textarea_comment_add">Écrire un commentaire</label>
-                                                <textarea class="form-control" id="textarea_comment_add" rows="3"></textarea>
+                                                <div class="form-group mt-4">
+                                                    <label for="textarea_comment_add">Écrire un commentaire</label>
+                                                    <textarea class="form-control" name="text" id="textarea_comment_add" rows="3"></textarea>
 
-                                                <div class="text-right my-1">
-                                                    <button class="btn btn-primary btn-sm">Publier</button>
+                                                    <div class="text-right my-1">
+                                                        <button class="btn btn-primary btn-sm">Publier</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        </form>
                     </div>
                 </div>
 
