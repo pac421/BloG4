@@ -70,12 +70,13 @@ class HomeController extends AbstractController
     public function newFiche(EntityManagerInterface $entityManager, $id)
     {
         $data = []; // This table will contain all the data required by the newFiche page
-        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $data['article'] = $entityManager->getRepository(Article::class)->find($id);
         $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
         $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
 
-        return $this->render('home/newFiche.html.twig', ['data' => $data,
-        'article' => $article
+        return $this->render('home/newFiche.html.twig', [
+            'data' => $data
         ]);
     }
 
@@ -130,17 +131,14 @@ class HomeController extends AbstractController
      */
     public function editFiche(Request $request, EntityManagerInterface $entityManager, $id)
     {
-
-        $article = $entityManager->getRepository(Article::class)->find($id);
-
         $data = []; // This table will contain all the data required by the newFiche page
 
+        $data['article'] = $entityManager->getRepository(Article::class)->find($id);
         $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
         $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
 
         return $this->render('home/newFiche.html.twig', [
-            'article' => $article,
-        'data' => $data 
+            'data' => $data
         ]);
 
     }

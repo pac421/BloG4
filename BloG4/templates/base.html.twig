@@ -39,7 +39,7 @@
 		<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 		{% if app.request.get('_route') == 'home' %}
 		<script type="text/javascript" src="{{ asset('js/home.js') }}"></script>
-		{% elseif app.request.get('_route') == 'newFiche' %}
+		{% elseif app.request.get('_route') == 'newFiche' or app.request.get('_route') == 'editFiche' %}
 		<script type="text/javascript" src="{{ asset('js/newFiche.js') }}"></script>
 		{% elseif app.request.get('_route') == 'profil' %}
 		<script type="text/javascript" src="{{ asset('js/profil.js') }}"></script>
