@@ -83,9 +83,9 @@ class SecurityController extends AbstractController
     }    
 
     /**
-     * @Route("/change_user_password", name="change_user_password")
+     * @Route("/change_user_password/{id}", name="change_user_password")
      */
-    public function change_user_password(EntityManagerInterface $entityManager, Request $request, UserPasswordEncoderInterface $passwordEncoder) 
+    public function change_user_password(EntityManagerInterface $entityManager, Request $request,$id,  UserPasswordEncoderInterface $passwordEncoder) 
     {
         $user = $entityManager->find(User::class, $this->getUser());
         $old_pwd = $request->get('old_pw'); 
@@ -105,15 +105,16 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('profil', array('id' => $id));
                
        }
+       
     }
     
     /**
-     * @Route("/change_name", name="change_name")
+     * @Route("/change_name{id}", name="change_name")
      */
-    public function change_name (EntityManagerInterface $entityManager, Request $request)
+    public function change_name (EntityManagerInterface $entityManager, Request $request, $id)
     {
         $user = $entityManager->find(User::class, $this->getUser());
         $firstname = $request->get('firstname'); 
@@ -130,7 +131,7 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('profil', array('id' => $id));
                
        }
     }

@@ -9,18 +9,16 @@
 
                     {% if data.user.id == app.user.id %}
 
-                        <form action="{{ path('change_name')}}" method="post">
+                        <form action="{{ path('change_name', {'id':app.user.id('id')})}}" method="post">
                             <div class="d-flex justify-content-between">
                                 <div class="md-form mt-0">
-                                    <input type="text" class="form-control" value="{{ data.user.firstname }}" id="input-profil-firstname" name="firstname" required>
+                                    <input type="text" class="form-control" value="{{ app.user.firstname }}" id="input-profil-firstname" name="firstname" required>
                                     <label for="input-profil-firstname">Prénom</label>
                                 </div>
-
                                 <div class="md-form mt-0">
                                     <input type="text" class="form-control" value="{{ data.user.lastName }}" id="input-profil-lastname" name="lastname" required>
                                     <label for="input-profil-lastname">Nom</label>
                                 </div>
-
                                 <button type="submit" class="btn btn-sm btn-primary" style="width: 95px; height: 34px; padding: 0px 10px;">Modifier</button>
                             </div>
                         </form>
@@ -44,25 +42,24 @@
                         <div class="w-100 text-center">
                             <h5 class="card-title"><a>Changer mon mot de passe</a></h5>
                         </div>
-
-                        <form>
+                        <form action="{{ path('change_user_password', {'id':app.user.id('id')})}}" method="post">
                             <div class="md-form form-group mt-5">
                                 <i class="fas fa-clock fa-xs prefix"></i>
-                                <input type="password" class="form-control form-control-sm" id="input-profil-pw-ancien" />
+                                <input type="password" class="form-control form-control-sm" name="old_pw" id="input-profil-pw-ancien" />
                                 <label for="input-profil-pw-ancien">Ancien mot de passe</label>
                             </div>
                             <div class="md-form form-group">
                                 <i class="fas fa-lock fa-xs prefix"></i>
-                                <input type="password" class="form-control form-control-sm" id="input-profil-pw-nouveau" />
+                                <input type="password" class="form-control form-control-sm" name="new_pw" id="input-profil-pw-nouveau" />
                                 <label for="input-profil-pw-nouveau">Nouveau mot de passe</label>
                             </div>
                             <div class="md-form form-group">
                                 <i class="fas fa-lock fa-xs prefix"></i>
-                                <input type="password" class="form-control form-control-sm" id="input-profil-pw-confirmation" />
+                                <input type="password" class="form-control form-control-sm" name="cnew_pw" id="input-profil-pw-confirmation" />
                                 <label for="input-profil-pw-confirmation">Confirmation du nouveau mot de passe</label>
                             </div>
+                            <button type="submit" class="btn btn-primary btn-sm float-right">Valider</button>
                         </form>
-                        <a href="#" class="btn btn-primary btn-sm float-right">Valider</a>
                     </div>
                 </div>
 
