@@ -27,7 +27,7 @@ class ArticleRepository extends ServiceEntityRepository
 		
         $result = $entityManager->createQuery(
             '
-            SELECT A.id, IDENTITY(A.created_on), A.created_at, A.title, A.picture, A.content, A.lst_categories, U.firstname, U.lastName 
+            SELECT A.id, IDENTITY(A.created_on) AS created_on, A.created_at, A.title, A.picture, A.content, A.lst_categories, U.firstname, U.lastName
             FROM App\Entity\Article A, App\Entity\User U
             WHERE A.created_on = U.id AND A.deleted_at IS NULL
             '

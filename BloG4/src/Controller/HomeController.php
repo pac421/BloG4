@@ -49,21 +49,15 @@ class HomeController extends AbstractController
         if($user =! null) {
             $data = []; // This table will contain all the data required by the home page
 
-            $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($this->getUser());
+            $data['user'] = $entityManager->getRepository(User::class)->getUserDataById($id);
             $data['lst_articles'] = $entityManager->getRepository(Article::class)->getArticlesByUserId($id);
-
-            $lst_all_categories = $entityManager->getRepository(Category::class)->getAllCategories();
+            $data['lst_categories'] = $entityManager->getRepository(Category::class)->getAllCategories();
 
             for($i = 0; $i < count($data['lst_articles']); $i++){
 
                 $article_id = $data['lst_articles'][$i]['id'];
                 $data['lst_articles'][$i]['lst_comments'] = $entityManager->getRepository(Comment::class)->getCommentsByArticleId($article_id);
 
-                for($j = 0; $j < count($lst_all_categories); $j++){
-                    if(in_array($lst_all_categories[$j]['id'], $data['lst_articles'][$i]['lst_categories'])){
-                        $data['lst_articles'][$i]['lst_categories_label'][$j] = $lst_all_categories[$j]['label'];
-                    }
-                }
             }
 
             return $this->render('home/profil.html.twig', ['data' => $data]);

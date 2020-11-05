@@ -6,54 +6,81 @@
         <div class="col-3 position-fixed h-100">
             <div class="card mt-5">
                 <div class="card-body">
-                    <form action="{{ path('change_name')}}" method="post">
-                        <div class="d-flex justify-content-between">
-                            <div class="md-form mt-0">
-                                <input type="text" class="form-control" value="{{ app.user.firstname }}" id="input-profil-firstname" name="firstname" required>
-                                <label for="input-profil-firstname">Prénom</label>
-                            </div>
 
-                            <div class="md-form mt-0">
-                                <input type="text" class="form-control" value="{{ app.user.lastname }}" id="input-profil-lastname" name="lastname" required>
-                                <label for="input-profil-lastname">Nom</label>
-                            </div>
+                    {% if data.user.id == app.user.id %}
 
-                            <button type="submit" class="btn btn-sm btn-primary" style="width: 95px; height: 34px; padding: 0px 10px;">Modifier</button>
-                        </div>
-                    </form>
-                    <p class="card-text">Email : {{ app.user.email }}</p>
+                        <form action="{{ path('change_name')}}" method="post">
+                            <div class="d-flex justify-content-between">
+                                <div class="md-form mt-0">
+                                    <input type="text" class="form-control" value="{{ data.user.firstname }}" id="input-profil-firstname" name="firstname" required>
+                                    <label for="input-profil-firstname">Prénom</label>
+                                </div>
+
+                                <div class="md-form mt-0">
+                                    <input type="text" class="form-control" value="{{ data.user.lastName }}" id="input-profil-lastname" name="lastname" required>
+                                    <label for="input-profil-lastname">Nom</label>
+                                </div>
+
+                                <button type="submit" class="btn btn-sm btn-primary" style="width: 95px; height: 34px; padding: 0px 10px;">Modifier</button>
+                            </div>
+                        </form>
+
+                    {% else %}
+
+                        <p class="card-text">Prénom : {{ data.user.firstname }}</p>
+                        <p class="card-text">Nom : {{ data.user.lastName }}</p>
+
+                    {% endif %}
+
+                    <p class="card-text">Email : {{ data.user.email }}</p>
+                    <p class="card-text">Anniversaire : {{ data.user.bornDate|date("d/m") }}</p>
                 </div>
             </div>
-            <div class="card mt-5">
-                <div class="card-body">
-                    <div class="w-100 text-center">
-                        <h5 class="card-title"><a>Changer mon mot de passe</a></h5>
+
+            {% if data.user.id == app.user.id %}
+
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <div class="w-100 text-center">
+                            <h5 class="card-title"><a>Changer mon mot de passe</a></h5>
+                        </div>
+
+                        <form>
+                            <div class="md-form form-group mt-5">
+                                <i class="fas fa-clock fa-xs prefix"></i>
+                                <input type="password" class="form-control form-control-sm" id="input-profil-pw-ancien" />
+                                <label for="input-profil-pw-ancien">Ancien mot de passe</label>
+                            </div>
+                            <div class="md-form form-group">
+                                <i class="fas fa-lock fa-xs prefix"></i>
+                                <input type="password" class="form-control form-control-sm" id="input-profil-pw-nouveau" />
+                                <label for="input-profil-pw-nouveau">Nouveau mot de passe</label>
+                            </div>
+                            <div class="md-form form-group">
+                                <i class="fas fa-lock fa-xs prefix"></i>
+                                <input type="password" class="form-control form-control-sm" id="input-profil-pw-confirmation" />
+                                <label for="input-profil-pw-confirmation">Confirmation du nouveau mot de passe</label>
+                            </div>
+                        </form>
+                        <a href="#" class="btn btn-primary btn-sm float-right">Valider</a>
                     </div>
-
-                    <form>
-                        <div class="md-form form-group mt-5">
-                            <i class="fas fa-clock fa-xs prefix"></i>
-                            <input type="password" class="form-control form-control-sm" id="input-profil-pw-ancien" />
-                            <label for="input-profil-pw-ancien">Ancien mot de passe</label>
-                        </div>
-                        <div class="md-form form-group">
-                            <i class="fas fa-lock fa-xs prefix"></i>
-                            <input type="password" class="form-control form-control-sm" id="input-profil-pw-nouveau" />
-                            <label for="input-profil-pw-nouveau">Nouveau mot de passe</label>
-                        </div>
-                        <div class="md-form form-group">
-                            <i class="fas fa-lock fa-xs prefix"></i>
-                            <input type="password" class="form-control form-control-sm" id="input-profil-pw-confirmation" />
-                            <label for="input-profil-pw-confirmation">Confirmation du nouveau mot de passe</label>
-                        </div>
-                    </form>
-                    <a href="#" class="btn btn-primary btn-sm float-right">Valider</a>
                 </div>
-            </div>
+
+            {% endif %}
+
         </div>
         <div id="div_profil_fil_actualite" class="col-9 pl-5 scrollbar scrollbar-primary w-100">
             <div class="my-5 d-flex justify-content-between align-items-center">
-                <h2 class="font-weight-bold"><i class="fa fa-newspaper mr-2"></i>Mes articles<span id="profil_badge_nbr_article" class="badge badge-primary ml-2" style="font-size: 16px;">{{ data.lst_articles|length }} articles</span></h2>
+
+                <h2 class="font-weight-bold"><i class="fa fa-newspaper mr-2"></i>
+
+                {% if data.user.id == app.user.id %}
+                    Mes articles
+                {% else %}
+                    Articles publiés par {{ data.user.firstname }} {{ data.user.lastName }}
+                {% endif %}
+
+                <span id="profil_badge_nbr_article" class="badge badge-primary ml-2" style="font-size: 16px;">{{ data.lst_articles|length }} articles</span></h2>
 
                 <a class="btn btn-light mr-5" href="{{path('home')}}"><i class='fa fa-reply mr-2'></i>Retour au fil d'actualités</a>
             </div>
@@ -73,10 +100,12 @@
                         <a href="#" class="primary-text">
                             <h6 class="h6 pb-1">
 
-                                {% for category_label in article.lst_categories_label %}
-
-                                    <span class="badge badge-primary mr-1">{{ category_label }}</span>
-
+                                {% for article_category in article.lst_categories %}
+                                    {% for category in data.lst_categories %}
+                                        {% if category.id == article_category %}
+                                            <span class="badge badge-primary mr-1">{{ category.label }}</span>
+                                        {% endif %}
+                                    {% endfor %}
                                 {% endfor %}
 
                             </h6>
@@ -85,7 +114,7 @@
                         <div class="mb-3">{{ article.content|raw }}</div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <i class='fa fa-calendar mr-2'></i>{{ article.created_at|date() }}
+                                <i class='fa fa-calendar mr-2'></i>{{ article.created_at|date("d/m/Y H:i") }}
                             </div>
                             <div>
                                 <a href="edit?id={{ article.id }}" title="Éditer" class="text-dark"><i class="fa fa-edit fa-sm"></i></a>
@@ -114,7 +143,7 @@
                                                     <div class="media-body text-center text-md-left md-3 ml-0">
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <div>
-                                                                <a class="font-weight-bold mb-0">{{ comment.name }}</a>, {{ comment.created_at|date() }}
+                                                                <a class="font-weight-bold mb-0 text-dark" href="/profil/{{ comment.created_on }}">{{ comment.name }}</a>, {{ comment.created_at|date("d/m/Y H:i") }}
                                                             </div>
                                                             <div>
                                                                 <a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a>

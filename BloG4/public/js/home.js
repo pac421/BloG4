@@ -110,14 +110,15 @@ function display_articles(lst_selected_and_ordered_articles){
 	
 	$('#home_div_articles').empty();
 
-	$.each(lst_selected_and_ordered_articles, function(i, article){	
+	$.each(lst_selected_and_ordered_articles, function(i, article){
 		
 		let id = article.id;
 		let title = article.title;
 		let picture = article.picture;
 		let name = article.name;
 		let content = article.content;
-		let created_at = moment(article.created_at.date).format("DD/MM/YYYY HH:mm:ss");
+		let created_at = moment(article.created_at.date).format("DD/MM/YYYY HH:mm");
+		let created_on = article.created_on;
 		
 		// Catégories
 		let lst_categories = article.lst_categories;
@@ -137,9 +138,10 @@ function display_articles(lst_selected_and_ordered_articles){
 			let com_id = comment.id;
 			let com_name = comment.name;
 			let com_content = comment.content;
-			let com_created_at = moment(comment.created_at.date).format("DD/MM/YYYY HH:mm:ss");
+			let com_created_at = moment(comment.created_at.date).format("DD/MM/YYYY HH:mm");
+			let com_created_on = comment.created_on;
 			
-			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><div class="d-flex justify-content-between align-items-center"><div><a class="font-weight-bold mb-0">'+com_name+'</a>, '+com_created_at+'</div><div><a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a></div></div>'+com_content+'</div></div>';
+			comments_html += '<div class="media d-block d-md-flex mt-4"><div class="media-body text-center text-md-left md-3 ml-0"><div class="d-flex justify-content-between align-items-center"><div><a class="font-weight-bold mb-0 text-dark" href="/profil/'+com_created_on+'">'+com_name+'</a>, '+com_created_at+'</div><div><a title="Supprimer" href="delete?id='+com_id+'" class="text-dark"><i class="fa fa-trash-alt fa-sm"></i></a></div></div>'+com_content+'</div></div>';
 		});
 		
 		let article_html = '';
@@ -155,6 +157,7 @@ function display_articles(lst_selected_and_ordered_articles){
 			.replace('[comments_number]', nb_comments)
 			.replace('[article_categories]', categories_html)
 			.replace('[article_comments]', comments_html)
+			.replace('[article_created_on]', created_on)
 		;
 		
 		$('#home_div_articles').append(article_html);

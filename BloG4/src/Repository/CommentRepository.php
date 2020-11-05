@@ -26,7 +26,7 @@ class CommentRepository extends ServiceEntityRepository
 		
         $result = $entityManager->createQuery(
             '
-            SELECT C.id, IDENTITY(C.created_on), C.created_at, C.content, IDENTITY(C.fiche), U.firstname, U.lastName
+            SELECT C.id, IDENTITY(C.created_on) as created_on, C.created_at, C.content, IDENTITY(C.fiche), U.firstname, U.lastName
             FROM App\Entity\Comment C, App\Entity\User U
             WHERE C.created_on = U.id AND C.deleted_at IS NULL AND C.fiche = :_article_id
             '
