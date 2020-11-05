@@ -76,7 +76,7 @@ function select_and_order_articles(lst_selected_categories, selected_date_order,
 	});
 	if(selected_date_order){
 		lst_selected_and_ordered_articles.reverse();
-	} 
+	}
 	
 	// Sort articles with searched string
 	for(let i = 0; i < lst_selected_and_ordered_articles.length; i++) {
